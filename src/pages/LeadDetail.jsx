@@ -7,6 +7,7 @@ import { useApi } from "../utils/useApi.js";
 import { ErrorBox, Loader } from "../components/States.jsx";
 import { ReasonTags, ScoreBadge, StatusBadge } from "../components/Badges.jsx";
 import SendButtons from "../components/SendButtons.jsx";
+import BusinessInfo from "../components/BusinessInfo.jsx";
 import Help, { FieldHelp } from "../components/Help.jsx";
 import { dateTime, day, joinMeta, money, realCity } from "../utils/format.js";
 import { STATUSES } from "../utils/constants.js";
@@ -275,11 +276,7 @@ export default function LeadDetail() {
           <section className="card">
             <h3>{t("lead.reasons")}</h3>
             {lead.matchReasons?.length ? <ReasonTags reasons={lead.matchReasons} /> : <p className="muted small">{t("lead.noProblem")}</p>}
-            {b.address && <p className="small"><strong>{t("lead.address")} :</strong> {b.address}</p>}
-            {b.website && <p className="small"><strong>{t("lead.website")} :</strong> <a href={b.website} target="_blank" rel="noreferrer">{b.website.replace(/^https?:\/\/(www\.)?/, "").split(/[/?#]/)[0]}</a></p>}
-            {b.phone && <p className="small">{b.phone}</p>}
-            {b.email && <p className="small">{b.email}</p>}
-            {b.instagram && <p className="small"><a href={b.instagram} target="_blank" rel="noreferrer">{b.instagram.replace("https://instagram.com/", "@")}</a></p>}
+            <BusinessInfo business={b} />
             <button
               className="btn btn-ghost danger btn-small"
               onClick={() => {
