@@ -25,7 +25,7 @@ Les appels `/api` sont redirigés vers le serveur (http://127.0.0.1:3000) par Vi
 | `/leads/:id` | Fiche commerce : message, envoi en un clic (WhatsApp, email, Instagram), suivi, assistant de réponse |
 | `/inbox` | À répondre : prospects qui ont répondu, les plus urgents d'abord |
 | `/stats` | Résultats : argent, taux de réponse par canal et par problème |
-| `/packs` | Packs de crédits (Standard 29 $, Premium 49 $, Recharge 17 $), paiement de démonstration, historique |
+| `/packs` | Packs de crédits (Standard 29 $, Premium 49 $, Recharge 19 $), paiement de démonstration, historique |
 | `/settings` | Réglages : langue, fiche infos du vendeur, liste « ne plus contacter » |
 | `*` | Page 404 |
 
