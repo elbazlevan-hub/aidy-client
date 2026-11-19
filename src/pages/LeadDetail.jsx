@@ -7,7 +7,7 @@ import { useApi } from "../utils/useApi.js";
 import { ErrorBox, Loader } from "../components/States.jsx";
 import { ReasonTags, ScoreBadge, StatusBadge } from "../components/Badges.jsx";
 import SendButtons from "../components/SendButtons.jsx";
-import { dateTime, day, money } from "../utils/format.js";
+import { dateTime, day, joinMeta, money, realCity } from "../utils/format.js";
 import { STATUSES } from "../utils/constants.js";
 
 const CHANNELS = ["whatsapp", "email", "instagram", "phone", "other"];
@@ -56,14 +56,14 @@ export default function LeadDetail() {
   if (error) return <ErrorBox error={error} onRetry={reload} />;
 
   const offer = offerData?.offer;
-  const currency = offer?.currency || "EUR";
+  const currency = offer?.currency || "USD";
 
   if (lead.locked) {
     return (
       <div className="page narrow">
         <Link to={`/offers/${lead.offerId}`} className="back">← {t("common.back")}</Link>
         <div className="card">
-          <h1>🔒 {lead.preview?.category}</h1>
+          <h1>{lead.preview?.category}</h1>
           <ReasonTags reasons={lead.matchReasons} />
           <button className="btn btn-primary" onClick={() => act("unlock", () => api.post(`/leads/${id}/unlock`), (r) => setLead(r.lead))}>
             {t("lead.unlockOne")}
@@ -92,8 +92,8 @@ export default function LeadDetail() {
         <div>
           <h1>{b.name}</h1>
           <p className="muted">
-            {b.category} · {b.city}
-            {b.rating ? ` · ⭐ ${b.rating} (${t("lead.reviews", { n: b.reviewCount ?? 0 })})` : ""}
+            {joinMeta(b.category, realCity(b.city))}
+            {b.rating ? ` · ★ ${b.rating} (${t("lead.reviews", { n: b.reviewCount ?? 0 })})` : ""}
           </p>
         </div>
         <div className="head-badges">
@@ -112,7 +112,7 @@ export default function LeadDetail() {
           {canFollow && (
             <section className="card">
               <div className="card-title-row">
-                <h2>✍️ {t(next?.kind === "followUp" ? "lead.followUpMessage" : "lead.message")}</h2>
+                <h2>{t(next?.kind === "followUp" ? "lead.followUpMessage" : "lead.message")}</h2>
                 {next?.kind !== "followUp" && lead.message && (
                   <button className="btn btn-ghost btn-small" disabled={!!busy} onClick={() => act("write", () => api.post(`/leads/${id}/message`), setLead)}>
                     ↻ {t("lead.rewrite")}
@@ -138,7 +138,7 @@ export default function LeadDetail() {
                         })
                       }
                     >
-                      ✅ {t("lead.markSent")}
+                      {t("lead.markSent")}
                     </button>
                   </div>
                 </>
@@ -146,7 +146,7 @@ export default function LeadDetail() {
                 <>
                   <p className="muted">{t("lead.noMessage")}</p>
                   <button className="btn btn-primary" disabled={!!busy} onClick={() => act("write", () => api.post(`/leads/${id}/message`), setLead)}>
-                    {busy === "write" ? t("common.loading") : `✨ ${t("lead.writeMessage")}`}
+                    {busy === "write" ? t("common.loading") : t("lead.writeMessage")}
                   </button>
                 </>
               )}
@@ -159,7 +159,7 @@ export default function LeadDetail() {
           {/* conversation + assistant de réponse */}
           {lead.status !== "toContact" && (
             <section className="card">
-              <h2>💬 {t("lead.conversation")}</h2>
+              <h2>{t("lead.conversation")}</h2>
               <div className="conversation">
                 {lead.message && <div className="bubble me"><pre>{lead.message}</pre></div>}
                 {(lead.replies || []).map((r, i) => (
@@ -173,12 +173,12 @@ export default function LeadDetail() {
 
               {lead.suggestedReply && (
                 <div className="assistant">
-                  <h3>✨ {t("lead.aidyReply")}</h3>
+                  <h3>{t("lead.aidyReply")}</h3>
                   <pre className="message">{lead.suggestedReply}</pre>
                   {assistant?.missingInfo?.length > 0 && <p className="hint">{t("lead.missingInfo", { list: assistant.missingInfo.join(", ") })}</p>}
                   <SendButtons links={assistant?.links || {}} text={lead.suggestedReply} />
                   <button className="btn btn-primary" disabled={!!busy} onClick={() => act("sent", () => api.post(`/leads/${id}/reply/sent`, {}), (r) => { setLead(r); setAssistant(null); })}>
-                    ✅ {t("lead.replySent")}
+                    {t("lead.replySent")}
                   </button>
                 </div>
               )}
@@ -201,9 +201,9 @@ export default function LeadDetail() {
                       })
                     }
                   >
-                    {busy === "reply" ? t("lead.analyzingReply") : `✨ ${t("lead.analyzeReply")}`}
+                    {busy === "reply" ? t("lead.analyzingReply") : t("lead.analyzeReply")}
                   </button>
-                  {user?.plan !== "premium" && user?.role !== "admin" && <p className="muted small">⭐ {t("lead.premiumOnly")} <Link to="/packs">{t("nav.seePacks")}</Link></p>}
+                  {user?.plan !== "premium" && user?.role !== "admin" && <p className="muted small">{t("lead.premiumOnly")} <Link to="/packs">{t("nav.seePacks")}</Link></p>}
                 </div>
               )}
             </section>
@@ -284,7 +284,7 @@ export default function LeadDetail() {
                 act("block", () => api.post(`/leads/${id}/block`, {}), () => navigate(`/offers/${lead.offerId}`));
               }}
             >
-              ⛔ {t("lead.block")}
+              {t("lead.block")}
             </button>
           </section>
         </div>

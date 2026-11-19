@@ -12,7 +12,7 @@ import CityPicker from "../components/CityPicker.jsx";
 
 const EMPTY = {
   title: "", description: "", serviceType: "", categories: "", country: "", cities: "",
-  criteria: [], customCriterion: "", messageLanguage: "fr", price: "", priceOnQuote: false, currency: "EUR",
+  criteria: [], customCriterion: "", messageLanguage: "fr", price: "", priceOnQuote: false, currency: "USD",
   dailyLimit: 60, includeLandlines: false,
 };
 
@@ -63,7 +63,7 @@ export default function NewOffer() {
           messageLanguage: o.messageLanguage || "fr",
           price: o.price || "",
           priceOnQuote: Boolean(o.priceOnQuote),
-          currency: o.currency || "EUR",
+          currency: o.currency || "USD",
           dailyLimit: o.dailyLimit || 60,
           includeLandlines: Boolean(o.includeLandlines),
         })
@@ -205,7 +205,7 @@ export default function NewOffer() {
             <CityPicker value={form.cities} onChange={(v) => setForm({ ...form, cities: v })} />
           </div>
           <button className="btn btn-primary" onClick={suggest} disabled={busy}>
-            {busy ? `✨ ${t("newOffer.generating")}` : `✨ ${t("newOffer.generate")}`}
+            {busy ? t("newOffer.generating") : t("newOffer.generate")}
           </button>
         </div>
       )}

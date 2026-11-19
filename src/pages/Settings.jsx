@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { api } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
-import { useI18n, LANGUAGES } from "../i18n/I18nContext.jsx";
+import { useI18n } from "../i18n/I18nContext.jsx";
+import LangSwitch from "../components/LangSwitch.jsx";
 import { useApi } from "../utils/useApi.js";
 import { ErrorBox, Loader } from "../components/States.jsx";
 import { isUrlOrEmpty } from "../utils/validate.js";
@@ -77,13 +78,11 @@ export default function Settings() {
         <h2>{t("settings.account")}</h2>
         <p>{user?.name} · {user?.email}</p>
         <p className="muted">{t("settings.plan")} : <strong>{t(`settings.plans.${plan}`)}</strong> · {t("nav.credits", { n: user?.credits ?? 0 })}</p>
-        <Link className="btn btn-secondary btn-small" to="/packs">💎 {t("nav.buyCredits")}</Link>
-        <label className="field">
+        <Link className="btn btn-secondary btn-small" to="/packs">{t("nav.buyCredits")}</Link>
+        <div className="field">
           <span>{t("settings.language")}</span>
-          <select value={lang} onChange={(e) => setLang(e.target.value)}>
-            {LANGUAGES.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
-          </select>
-        </label>
+          <LangSwitch className="lang-large" />
+        </div>
         <button className="btn btn-ghost btn-small" onClick={async () => { await logout(); navigate("/"); }}>
           {t("nav.logout")}
         </button>
@@ -113,7 +112,7 @@ export default function Settings() {
       </section>
 
       <section className="card">
-        <h2>⛔ {t("settings.blocklist")}</h2>
+        <h2>{t("settings.blocklist")}</h2>
         {blocklist.loading && <Loader />}
         <ErrorBox error={blocklist.error} onRetry={blocklist.reload} />
         {blocklist.data?.length === 0 && <p className="muted">{t("settings.blocklistEmpty")}</p>}

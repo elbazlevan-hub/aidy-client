@@ -7,7 +7,6 @@ import { useApi } from "../utils/useApi.js";
 import { Empty, ErrorBox, Loader } from "../components/States.jsx";
 import { dateTime, money } from "../utils/format.js";
 
-const ICONS = { standard: "🚀", premium: "⭐", recharge: "🔋" };
 
 // Page "Packs" : acheter des crédits (paiement unique, pas d'abonnement)
 export default function Packs() {
@@ -60,7 +59,7 @@ export default function Packs() {
 
       {success && (
         <div className="alert alert-success" role="status">
-          <span>✅ {success}</span>
+          <span>{success}</span>
           <Link className="btn btn-small btn-success" to="/offers">{t("packs.goOffers")}</Link>
         </div>
       )}
@@ -68,21 +67,20 @@ export default function Packs() {
       <div className="pack-grid">
         {data.packs.map((p) => {
           const locked = p.needsPack && plan === "free";
-          const perLead = (p.price / p.credits).toFixed(2);
+          const perLead = new Intl.NumberFormat(lang, { style: "currency", currency: p.currency, minimumFractionDigits: 2 }).format(p.price / p.credits);
           return (
             <article key={p.id} className={`card pack-card${p.id === "premium" ? " pack-best" : ""}${locked ? " pack-locked" : ""}`}>
               {p.id === "premium" && <span className="pack-ribbon">{t("packs.best")}</span>}
-              <div className="pack-icon" aria-hidden="true">{ICONS[p.id]}</div>
-              <h2>{t(`packs.${p.id}.name`)}</h2>
+                            <h2>{t(`packs.${p.id}.name`)}</h2>
               <div className="pack-price">{money(p.price, p.currency, lang)}</div>
               <p className="muted small">{t("packs.oneTime")}</p>
               <ul className="pack-features">
-                <li>✅ {t("packs.leads", { n: p.credits })}</li>
-                <li>✅ {t("packs.perLead", { price: perLead })}</li>
-                {t(`packs.${p.id}.features`).split("|").map((f) => <li key={f}>✅ {f}</li>)}
+                <li>{t("packs.leads", { n: p.credits })}</li>
+                <li>{t("packs.perLead", { price: perLead })}</li>
+                {t(`packs.${p.id}.features`).split("|").map((f) => <li key={f}>{f}</li>)}
               </ul>
               {locked ? (
-                <p className="muted small">🔒 {t("packs.rechargeLocked")}</p>
+                <p className="muted small">{t("packs.rechargeLocked")}</p>
               ) : (
                 <button
                   className={`btn btn-block ${p.id === "premium" ? "btn-primary" : "btn-secondary"}`}
@@ -101,9 +99,9 @@ export default function Packs() {
       {chosen && (
         <div className="modal-backdrop" role="dialog" aria-modal="true" onClick={() => !buying && setChosen(null)}>
           <div className="card modal" onClick={(e) => e.stopPropagation()}>
-            <h2>{ICONS[chosen.id]} {t(`packs.${chosen.id}.name`)} — {money(chosen.price, chosen.currency, lang)}</h2>
+            <h2>{t(`packs.${chosen.id}.name`)} — {money(chosen.price, chosen.currency, lang)}</h2>
             <p>{t("packs.confirmText", { n: chosen.credits })}</p>
-            <div className="alert alert-warning"><span>🧪 {t("packs.demoNote")}</span></div>
+            <div className="alert alert-warning"><span>{t("packs.demoNote")}</span></div>
             <ErrorBox error={buyError} />
             <div className="row-actions">
               <button className="btn btn-ghost" onClick={() => setChosen(null)} disabled={buying}>{t("common.cancel")}</button>
@@ -123,7 +121,7 @@ export default function Packs() {
           <ul className="purchase-list">
             {data.purchases.map((p) => (
               <li key={p._id}>
-                <span>{ICONS[p.packId]} {t(`packs.${p.packId}.name`)} · +{p.credits}</span>
+                <span>{t(`packs.${p.packId}.name`)} · +{p.credits}</span>
                 <span className="muted small">{dateTime(p.createdAt, lang)}</span>
                 <strong>{money(p.price, p.currency, lang)}{p.demo && <span className="badge"> {t("packs.demo")}</span>}</strong>
               </li>

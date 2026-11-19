@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { Link, NavLink, Outlet, useNavigate } from "react-router";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import Logo from "./Logo.jsx";
+import Icon from "./Icon.jsx";
 
 const LINKS = [
-  { to: "/today", key: "nav.today", icon: "☀️" },
-  { to: "/offers", key: "nav.offers", icon: "🎯" },
-  { to: "/inbox", key: "nav.inbox", icon: "💬" },
-  { to: "/stats", key: "nav.stats", icon: "📈" },
-  { to: "/packs", key: "nav.packs", icon: "💎" },
-  { to: "/settings", key: "nav.settings", icon: "⚙️" },
+  { to: "/today", key: "nav.today", icon: "today" },
+  { to: "/offers", key: "nav.offers", icon: "offers" },
+  { to: "/inbox", key: "nav.inbox", icon: "inbox" },
+  { to: "/stats", key: "nav.stats", icon: "stats" },
+  { to: "/packs", key: "nav.packs", icon: "packs" },
+  { to: "/settings", key: "nav.settings", icon: "settings" },
 ];
 
 // structure des pages connectées : menu à gauche (en bas sur téléphone) + contenu
@@ -18,6 +19,7 @@ export default function Layout() {
   const { user, logout } = useAuth();
   const { t } = useI18n();
   const navigate = useNavigate();
+  const location = useLocation();
   const [busy, setBusy] = useState(false);
 
   async function onLogout() {
@@ -27,14 +29,30 @@ export default function Layout() {
   }
 
   const unlimited = user?.role === "admin";
+  const credits = (
+    <Link to="/packs" className="credit-link" title={t("nav.buyCredits")}>
+      {user?.plan === "premium" && <span className="plan-star" aria-hidden="true">★</span>}
+      {unlimited ? "∞" : t("nav.credits", { n: user?.credits ?? 0 })}
+      <span className="credit-plus" aria-hidden="true">+</span>
+    </Link>
+  );
+
   return (
     <div className="app">
+      {/* barre du haut, seulement sur téléphone */}
+      <header className="mobile-top">
+        <Logo height={22} />
+        <div className="mobile-top-right">
+          {credits}
+        </div>
+      </header>
+
       <aside className="sidebar">
         <Logo />
         <nav className="nav">
           {LINKS.map((l) => (
             <NavLink key={l.to} to={l.to} className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}>
-              <span className="nav-icon" aria-hidden="true">{l.icon}</span>
+              <span className="nav-icon"><Icon name={l.icon} /></span>
               <span className="nav-label">{t(l.key)}</span>
             </NavLink>
           ))}
@@ -42,22 +60,21 @@ export default function Layout() {
         <div className="sidebar-footer">
           <div className="user-chip">
             <div className="avatar" aria-hidden="true">{(user?.name || "?").slice(0, 1).toUpperCase()}</div>
-            <div>
+            <div className="user-info">
               <div className="user-name">{user?.name}</div>
-              {/* le compteur de crédits mène à la page des packs */}
-              <Link to="/packs" className="user-plan credit-link" title={t("nav.buyCredits")}>
-                {user?.plan === "premium" && "⭐ "}
-                {unlimited ? "∞" : t("nav.credits", { n: user?.credits ?? 0 })} · <span className="credit-plus">+</span>
-              </Link>
+              <div className="user-plan">{credits}</div>
             </div>
+            <button className="icon-btn" onClick={onLogout} disabled={busy} title={t("nav.logout")} aria-label={t("nav.logout")}>
+              <Icon name="logout" size={18} />
+            </button>
           </div>
-          <button className="btn btn-ghost btn-small" onClick={onLogout} disabled={busy}>
-            {t("nav.logout")}
-          </button>
         </div>
       </aside>
       <main className="main">
-        <Outlet />
+        {/* petite apparition à chaque changement de page */}
+        <div key={location.pathname} className="route-fade">
+          <Outlet />
+        </div>
       </main>
     </div>
   );

@@ -52,11 +52,11 @@ export default function CityPicker({ value, onChange, error }) {
       <div className="segmented">
         <label className={mode === "country" ? "on" : ""}>
           <input type="radio" checked={mode === "country"} onChange={() => { setMode("country"); onChange(""); setWarning(""); }} />
-          🌍 {t("newOffer.wholeCountry")}
+          {t("newOffer.wholeCountry")}
         </label>
         <label className={mode === "cities" ? "on" : ""}>
           <input type="radio" checked={mode === "cities"} onChange={() => { setMode("cities"); setWarning(""); }} />
-          📍 {t("newOffer.someCities")}
+          {t("newOffer.someCities")}
         </label>
       </div>
       {mode === "cities" && (

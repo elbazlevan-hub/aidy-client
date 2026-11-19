@@ -25,7 +25,7 @@ Les appels `/api` sont redirigés vers le serveur (http://127.0.0.1:3000) par Vi
 | `/leads/:id` | Fiche commerce : message, envoi en un clic (WhatsApp, email, Instagram), suivi, assistant de réponse |
 | `/inbox` | À répondre : prospects qui ont répondu, les plus urgents d'abord |
 | `/stats` | Résultats : argent, taux de réponse par canal et par problème |
-| `/packs` | Packs de crédits (Standard 29 €, Premium 49 €, Recharge 17 €), paiement de démonstration, historique |
+| `/packs` | Packs de crédits (Standard 29 $, Premium 49 $, Recharge 17 $), paiement de démonstration, historique |
 | `/settings` | Réglages : langue, fiche infos du vendeur, liste « ne plus contacter » |
 | `*` | Page 404 |
 
@@ -38,4 +38,12 @@ Les pages après connexion sont protégées (`ProtectedRoute`) et partagent la m
 - Validation des formulaires côté client (`src/utils/validate.js`) : email, mot de passe fort, emails jetables refusés, URLs, prix… Le serveur revérifie tout avec Zod
 - États de chargement, d'erreur et listes vides sur chaque écran (`components/States.jsx`)
 - Responsive : menu à gauche sur ordinateur, en bas sur téléphone
-- Logo et favicon : `public/logo.png`, `public/favicon.png`
+- Logo : le mot AIDY `public/aidy-wordmark.png` ; icône (onglet, écran d'accueil du téléphone) : `public/favicon.png`, `public/apple-touch-icon.png`, `public/logo-icon.png`
+
+## Mise en ligne
+1. `npm run build` crée le dossier `dist/` (le site à mettre en ligne).
+2. **Netlify (conseillé)** : dans `public/_redirects`, remplacer `ADRESSE-DU-SERVEUR` par l'adresse du serveur en ligne.
+   Netlify transmet alors `/api` au serveur : l'app et l'API sont sur le même domaine, le cookie de connexion marche partout (même sur iPhone).
+   La 2e ligne du fichier fait marcher les adresses de React Router (`/offers/...`) quand on recharge la page.
+3. **Autre hébergeur** : mettre l'adresse du serveur dans la variable `VITE_API_URL` (ex. `https://aidy-api.onrender.com/api`) avant `npm run build`,
+   et côté serveur `COOKIE_SAMESITE=none` + l'adresse de l'app dans `CLIENT_URL`.

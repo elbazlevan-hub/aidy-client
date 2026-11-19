@@ -4,7 +4,7 @@ export const CRITERIA = [
   "lowRating", "fewReviews", "noSocial", "fewPhotos", "noInstagram", "noHours",
 ];
 export const CURRENCIES = [
-  "EUR", "USD", "GBP", "CHF", "CAD", "AUD", "NZD", "JPY", "CNY", "HKD", "SGD", "INR", "KRW",
+  "USD", "EUR", "GBP", "CHF", "CAD", "AUD", "NZD", "JPY", "CNY", "HKD", "SGD", "INR", "KRW",
   "AED", "SAR", "QAR", "KWD", "ILS", "TRY", "EGP", "MAD", "TND", "DZD", "XOF", "XAF", "ZAR", "NGN", "KES",
   "BRL", "MXN", "ARS", "CLP", "COP", "PEN", "SEK", "NOK", "DKK", "PLN", "CZK", "HUF", "RON", "BGN", "RUB", "UAH",
   "THB", "MYR", "IDR", "PHP", "VND",

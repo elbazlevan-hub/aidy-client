@@ -1,0 +1,5 @@
+# Netlify : /api est envoyé au serveur Express (même domaine -> le cookie de connexion marche partout, même sur iPhone)
+# REMPLACER l'adresse ci-dessous par celle du serveur en ligne
+/api/*  https://ADRESSE-DU-SERVEUR/api/:splat  200
+# React Router : toutes les autres adresses ouvrent l'app
+/*      /index.html  200

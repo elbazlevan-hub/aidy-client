@@ -9,7 +9,7 @@ export default function MoneyCard({ stats }) {
 
   const entries = Object.entries(stats?.money || {});
   const main = entries.sort((a, b) => b[1].earned - a[1].earned)[0];
-  const [currency, m] = main || ["EUR", { earned: 0, potential: 0, clients: 0, interested: 0 }];
+  const [currency, m] = main || ["USD", { earned: 0, potential: 0, clients: 0, interested: 0 }];
   const amount = money(m.earned, currency, lang);
 
   async function share() {
@@ -28,7 +28,7 @@ export default function MoneyCard({ stats }) {
 
   return (
     <div className="card money">
-      <div className="money-label">💰 {t("money.earned")}</div>
+      <div className="money-label">{t("money.earned")}</div>
       <div className="money-amount">{amount}</div>
       <div className="money-sub">
         {t("money.clients", { n: m.clients })}

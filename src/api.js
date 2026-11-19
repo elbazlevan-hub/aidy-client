@@ -7,10 +7,14 @@ export class ApiError extends Error {
   }
 }
 
+// en local : "/api" (proxy Vite). En ligne : "/api" aussi grâce au proxy Netlify (public/_redirects),
+// ou l'adresse complète du serveur dans VITE_API_URL (ex. https://aidy-api.onrender.com/api)
+export const API_URL = (import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "");
+
 async function request(method, path, body) {
   let response;
   try {
-    response = await fetch(`/api${path}`, {
+    response = await fetch(`${API_URL}${path}`, {
       method,
       credentials: "include",
       headers: body !== undefined ? { "Content-Type": "application/json" } : {},
@@ -19,6 +23,8 @@ async function request(method, path, body) {
   } catch {
     throw new ApiError(0, "network");
   }
+  // 502/503/504 : le proxy ne trouve pas le serveur (arrêté ou en train de redémarrer)
+  if ([502, 503, 504].includes(response.status)) throw new ApiError(response.status, "network");
   if (response.status === 204) return null;
   const data = await response.json().catch(() => null);
   if (!response.ok) {

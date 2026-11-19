@@ -4,8 +4,8 @@ import en from "./en.js";
 import es from "./es.js";
 
 export const LANGUAGES = [
-  { code: "fr", label: "Français" },
   { code: "en", label: "English" },
+  { code: "fr", label: "Français" },
   { code: "es", label: "Español" },
 ];
 const DICTS = { fr, en, es };

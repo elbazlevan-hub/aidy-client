@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import { ErrorBox } from "../components/States.jsx";
 import Logo from "../components/Logo.jsx";
+import LangSwitch from "../components/LangSwitch.jsx";
 import { isDisposableEmail, isEmail, isStrongPassword } from "../utils/validate.js";
 
 function Field({ label, error, hint, ...props }) {
@@ -68,6 +69,7 @@ function AuthForm({ mode }) {
 
   return (
     <div className="auth">
+      <LangSwitch className="auth-top" />
       <form className="card auth-card" onSubmit={onSubmit} noValidate>
         <Logo to="/" />
         <h1>{t(isRegister ? "auth.registerTitle" : "auth.loginTitle")}</h1>

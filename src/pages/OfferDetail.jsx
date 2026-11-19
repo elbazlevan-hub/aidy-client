@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router";
-import { api } from "../api.js";
+import { api, API_URL } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import { useApi } from "../utils/useApi.js";
@@ -128,10 +128,10 @@ export default function OfferDetail() {
         </div>
         <div className="mini-actions">
           {hasSearched && (
-            <button className="btn btn-ghost btn-small" onClick={findClients} disabled={!!step}>🔄 {t("offer.searchAgain")}</button>
+            <button className="btn btn-ghost btn-small" onClick={findClients} disabled={!!step}>{t("offer.searchAgain")}</button>
           )}
-          <Link className="btn btn-ghost btn-small" to={`/offers/${id}/edit`}>✏️ {t("offer.edit")}</Link>
-          <a className="btn btn-ghost btn-small" href={`/api/offers/${id}/export`}>⬇️ {t("offer.export")}</a>
+          <Link className="btn btn-ghost btn-small" to={`/offers/${id}/edit`}>{t("offer.edit")}</Link>
+          <a className="btn btn-ghost btn-small" href={`${API_URL}/offers/${id}/export`}>⬇️ {t("offer.export")}</a>
           <button className="btn btn-ghost btn-small danger" onClick={remove} disabled={!!step}>{t("common.delete")}</button>
         </div>
       </header>
@@ -141,7 +141,7 @@ export default function OfferDetail() {
         <div className="card cta">
           <h2>{t("offer.ctaTitle")}</h2>
           <p className="muted">{t("offer.ctaText", { n: Math.min(5, credits === Infinity ? 5 : credits) })}</p>
-          <button className="btn btn-primary btn-large" onClick={findClients}>🚀 {t("offer.findClients")}</button>
+          <button className="btn btn-primary btn-large" onClick={findClients}>{t("offer.findClients")}</button>
         </div>
       )}
 
@@ -171,7 +171,7 @@ export default function OfferDetail() {
       {/* 1) prêts à contacter */}
       {hasSearched && !step && (
         <section>
-          <h2>✅ {t("offer.readyTitle")} <span className="count">{ready.length}</span></h2>
+          <h2>{t("offer.readyTitle")} <span className="count">{ready.length}</span></h2>
           {ready.length === 0 ? (
             <p className="muted">
               {locked.length ? t("offer.readyEmpty") : all.length || offer.data.noProblemLeads ? t("offer.noProblemAtAll") : t("offer.noLeadsText")}
@@ -187,7 +187,7 @@ export default function OfferDetail() {
 
       {hasSearched && !step && inProgress.length > 0 && (
         <section>
-          <h2>📬 {t("offer.inProgressTitle")} <span className="count">{inProgress.length}</span></h2>
+          <h2>{t("offer.inProgressTitle")} <span className="count">{inProgress.length}</span></h2>
           <div className="cards">{inProgress.map((l) => <LeadCard key={l._id} lead={l} />)}</div>
         </section>
       )}
@@ -197,17 +197,17 @@ export default function OfferDetail() {
         <section className="card unlock-box">
           <div className="card-title-row">
             <div>
-              <h2>🔒 {t("offer.moreTitle", { n: locked.length })}</h2>
+              <h2>{t("offer.moreTitle", { n: locked.length })}</h2>
               <p className="muted small">
                 {credits > 0 ? t("offer.moreText", { credits: credits === Infinity ? "∞" : credits }) : t("offer.outOfCredits")}
               </p>
             </div>
             {credits <= 0 && (
-              <Link className="btn btn-primary" to="/packs">💎 {t("nav.buyCredits")}</Link>
+              <Link className="btn btn-primary" to="/packs">{t("nav.buyCredits")}</Link>
             )}
             {credits > 0 && (
               <button className="btn btn-primary" onClick={() => unlock()}>
-                🔓 {t("offer.unlock", { n: Math.min(5, credits === Infinity ? 5 : credits, locked.length) })}
+                {t("offer.unlock", { n: Math.min(5, credits === Infinity ? 5 : credits, locked.length) })}
               </button>
             )}
           </div>
@@ -225,7 +225,7 @@ export default function OfferDetail() {
       )}
 
       {hasSearched && !step && offer.data.noProblemLeads > 0 && (
-        <p className="muted small">🙈 {t("offer.hiddenNoProblem", { n: offer.data.noProblemLeads })}</p>
+        <p className="muted small">{t("offer.hiddenNoProblem", { n: offer.data.noProblemLeads })}</p>
       )}
     </div>
   );

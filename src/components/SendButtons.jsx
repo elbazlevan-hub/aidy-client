@@ -19,26 +19,26 @@ export default function SendButtons({ links = {}, text }) {
       <div className="send-buttons">
         {links.whatsapp && (
           <a className="btn btn-whatsapp" href={links.whatsapp} target="_blank" rel="noreferrer">
-            💬 {t("lead.sendWhatsapp")}
+            {t("lead.sendWhatsapp")}
           </a>
         )}
         {links.email && (
           <a className="btn btn-secondary" href={links.email}>
-            ✉️ {t("lead.sendEmail")}
+            {t("lead.sendEmail")}
           </a>
         )}
         {links.instagram && (
           <button className="btn btn-instagram" onClick={() => copy(links.instagram)}>
-            📸 {t("lead.copyInstagram")}
+            {t("lead.copyInstagram")}
           </button>
         )}
         {links.phone && (
           <a className="btn btn-secondary" href={links.phone}>
-            📞 {t("lead.call")}
+            {t("lead.call")}
           </a>
         )}
         <button className="btn btn-ghost" onClick={() => copy()}>
-          📋 {t("lead.copyMessage")}
+          {t("lead.copyMessage")}
         </button>
       </div>
       {hint && <p className="hint success">{hint}</p>}

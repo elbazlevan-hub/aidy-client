@@ -29,10 +29,10 @@ export function ErrorBox({ error, onRetry }) {
 }
 
 // liste vide
-export function Empty({ icon = "✨", title, text, children }) {
+export function Empty({ title, text, children }) {
   return (
     <div className="empty">
-      <div className="empty-icon" aria-hidden="true">{icon}</div>
+      <div className="empty-icon" aria-hidden="true"><span className="empty-reticle" /></div>
       <h3>{title}</h3>
       {text && <p>{text}</p>}
       {children}

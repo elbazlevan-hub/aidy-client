@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import { ReasonTags, ScoreBadge, StatusBadge } from "./Badges.jsx";
+import { joinMeta, realCity } from "../utils/format.js";
 
 // une carte de prospect dans une liste : verrouillée (sans nom ni contact) ou débloquée
 export default function LeadCard({ lead, onUnlock, unlocking }) {
@@ -12,21 +13,20 @@ export default function LeadCard({ lead, onUnlock, unlocking }) {
       <div className="card lead-card locked">
         <div className="lead-head">
           <div>
-            <div className="lead-title">🔒 {p.category || t("lead.locked")}</div>
+            <div className="lead-title"><span className="lock" aria-hidden="true" />{p.category || t("lead.locked")}</div>
             <div className="muted">
-              {p.city}
-              {p.rating ? ` · ⭐ ${p.rating} (${t("lead.reviews", { n: p.reviewCount ?? 0 })})` : ""}
+              {joinMeta(realCity(p.city), p.rating && `★ ${p.rating} (${t("lead.reviews", { n: p.reviewCount ?? 0 })})`)}
             </div>
           </div>
           <ScoreBadge score={lead.score} />
         </div>
         <ReasonTags reasons={lead.matchReasons} />
         <ul className="perks">
-          <li>✍️ {t("lead.aiIncluded")}</li>
-          {p.hasMobile && <li>📱 {t("lead.hasMobile")}</li>}
-          {p.hasEmail && <li>✉️ {t("lead.hasEmail")}</li>}
-          {p.hasInstagram && <li>📸 {t("lead.hasInstagram")}</li>}
-          {p.hasLandline && <li>☎️ {t("lead.hasLandline")}</li>}
+          <li>{t("lead.aiIncluded")}</li>
+          {p.hasMobile && <li>{t("lead.hasMobile")}</li>}
+          {p.hasEmail && <li>{t("lead.hasEmail")}</li>}
+          {p.hasInstagram && <li>{t("lead.hasInstagram")}</li>}
+          {p.hasLandline && <li>{t("lead.hasLandline")}</li>}
         </ul>
         {lead.score > 0 ? (
           onUnlock && (
@@ -48,8 +48,8 @@ export default function LeadCard({ lead, onUnlock, unlocking }) {
         <div>
           <div className="lead-title">{b.name}</div>
           <div className="muted">
-            {b.category} · {b.city}
-            {b.rating ? ` · ⭐ ${b.rating}` : ""}
+            {joinMeta(b.category, realCity(b.city))}
+            {b.rating ? ` · ★ ${b.rating}` : ""}
           </div>
         </div>
         <ScoreBadge score={lead.score} />
@@ -57,7 +57,7 @@ export default function LeadCard({ lead, onUnlock, unlocking }) {
       <ReasonTags reasons={lead.matchReasons} />
       <div className="lead-foot">
         <StatusBadge status={lead.status} />
-        {lead.message ? <span className="muted">✍️ {t("lead.message")}</span> : <span className="muted">{t("lead.noMessage")}</span>}
+        {lead.message ? <span className="muted">{t("lead.message")}</span> : <span className="muted">{t("lead.noMessage")}</span>}
       </div>
     </Link>
   );

@@ -42,7 +42,7 @@ export default function Today() {
             {stats.data && <MoneyCard stats={stats.data} />}
             {inbox.data?.toAnswer > 0 && (
               <Link to="/inbox" className="card highlight">
-                <div className="big">💬 {inbox.data.toAnswer}</div>
+                <div className="big">{inbox.data.toAnswer}</div>
                 <div>{t("today.toAnswer", { n: inbox.data.toAnswer })}</div>
               </Link>
             )}
@@ -52,7 +52,7 @@ export default function Today() {
           {d.lateFollowUps > 0 && <div className="alert alert-warning">{t("today.late", { n: d.lateFollowUps })}</div>}
 
           <section>
-            <h2>🔁 {t("today.followUps")} <span className="count">{d.followUps.length}</span></h2>
+            <h2>{t("today.followUps")} <span className="count">{d.followUps.length}</span></h2>
             {d.followUps.length === 0 ? (
               <p className="muted">{t("today.noFollowUps")}</p>
             ) : (
@@ -61,7 +61,7 @@ export default function Today() {
           </section>
 
           <section>
-            <h2>🚀 {t("today.toContact")} <span className="count">{d.toContact.length}</span></h2>
+            <h2>{t("today.toContact")} <span className="count">{d.toContact.length}</span></h2>
             {d.withoutMessage > 0 && <p className="hint">{t("today.withoutMessage", { n: d.withoutMessage })}</p>}
             {d.toContact.length === 0 ? (
               <p className="muted">{t("today.noToContact")}</p>
