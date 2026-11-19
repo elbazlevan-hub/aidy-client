@@ -5,6 +5,7 @@ import { useApi } from "../utils/useApi.js";
 import { Empty, ErrorBox, Loader } from "../components/States.jsx";
 import LeadCard from "../components/LeadCard.jsx";
 import MoneyCard from "../components/MoneyCard.jsx";
+import Help from "../components/Help.jsx";
 
 // le plan du jour : qui relancer, qui contacter, l'argent généré
 export default function Today() {
@@ -27,7 +28,7 @@ export default function Today() {
       <header className="page-head">
         <div>
           <h1>{t("today.hello", { name: user?.name?.split(" ")[0] || "" })}</h1>
-          <p className="muted">{t("today.sentToday", { sent: d.sentToday, limit: d.dailyLimit })}</p>
+          <p className="muted">{t("today.sentToday", { sent: d.sentToday, limit: d.dailyLimit })}<Help text={t("help.sentToday")} /></p>
           <div className="progress" aria-hidden="true"><div style={{ width: `${progress}%` }} /></div>
         </div>
       </header>

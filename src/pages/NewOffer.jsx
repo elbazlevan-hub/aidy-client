@@ -9,6 +9,7 @@ import { isCountry } from "../utils/validate.js";
 import { CRITERIA, CURRENCIES, MESSAGE_LANGUAGES, COUNTRY_LANGUAGE, currencyLabel } from "../utils/constants.js";
 import { countryList } from "../utils/countries.js";
 import CityPicker from "../components/CityPicker.jsx";
+import Help, { FieldHelp } from "../components/Help.jsx";
 
 const EMPTY = {
   title: "", description: "", serviceType: "", categories: "", country: "", cities: "",
@@ -187,6 +188,7 @@ export default function NewOffer() {
           </button>
         ))}
       </div>}
+      {!editId && <p className="field-help mode-help">{t("help.modes")}</p>}
 
       <ErrorBox error={error} />
 
@@ -195,7 +197,7 @@ export default function NewOffer() {
           <label className="field">
             <span>{t("newOffer.describe")}</span>
             <textarea rows={4} value={text} placeholder={t("newOffer.describePlaceholder")} onChange={(e) => { setText(e.target.value); setErrors({}); }} className={errors.text ? "invalid" : ""} />
-            {errors.text && <small className="field-error">{errors.text}</small>}
+            {errors.text ? <small className="field-error">{errors.text}</small> : <FieldHelp>{t("help.describe")}</FieldHelp>}
           </label>
           <div className="grid-2">
             <label className="field">
@@ -231,17 +233,18 @@ export default function NewOffer() {
           <label className="field">
             <span>{t("newOffer.fieldTitle")}</span>
             <input value={form.title} onChange={set("title")} className={errors.title ? "invalid" : ""} />
-            {errors.title && <small className="field-error">{errors.title}</small>}
+            {errors.title ? <small className="field-error">{errors.title}</small> : <FieldHelp>{t("help.title")}</FieldHelp>}
           </label>
           <label className="field">
             <span>{t("newOffer.fieldDescription")} <em className="muted">({t("common.optional")})</em></span>
             <textarea rows={2} value={form.description} onChange={set("description")} />
+            <FieldHelp>{t("help.description")}</FieldHelp>
           </label>
           <div className="grid-2">
             <label className="field">
               <span>{t("newOffer.fieldService")}</span>
               <input value={form.serviceType} onChange={set("serviceType")} className={errors.serviceType ? "invalid" : ""} />
-              {errors.serviceType && <small className="field-error">{errors.serviceType}</small>}
+              {errors.serviceType ? <small className="field-error">{errors.serviceType}</small> : <FieldHelp>{t("help.service")}</FieldHelp>}
             </label>
             <label className="field">
               <span>{t("newOffer.fieldCategories")}</span>
@@ -251,13 +254,14 @@ export default function NewOffer() {
             <label className="field">
               <span>{t("newOffer.fieldCountry")}</span>
               <CountrySelect value={form.country} onChange={set("country")} countries={countries} invalid={!!errors.country} placeholder="—" />
-              {errors.country && <small className="field-error">{errors.country}</small>}
+              {errors.country ? <small className="field-error">{errors.country}</small> : <FieldHelp>{t("help.country")}</FieldHelp>}
             </label>
             <CityPicker value={form.cities} onChange={(v) => { setForm({ ...form, cities: v }); setErrors({ ...errors, cities: undefined }); }} error={errors.cities} />
           </div>
 
           <fieldset className="field">
             <legend>{t("newOffer.fieldCriteria")}</legend>
+            <FieldHelp>{t("help.criteria")}</FieldHelp>
             <div className="chips">
               {CRITERIA.map((c) => (
                 <button type="button" key={c} className={`chip${form.criteria.includes(c) ? " on" : ""}`} onClick={() => toggleCriterion(c)} aria-pressed={form.criteria.includes(c)}>
@@ -289,13 +293,14 @@ export default function NewOffer() {
                 <input type="checkbox" checked={form.priceOnQuote} onChange={set("priceOnQuote")} />
                 <span>{t("newOffer.onQuote")}</span>
               </label>
-              {errors.price && <small className="field-error">{errors.price}</small>}
+              {errors.price ? <small className="field-error">{errors.price}</small> : <FieldHelp>{t("help.price")}</FieldHelp>}
             </label>
             <label className="field">
               <span>{t("newOffer.fieldCurrency")}</span>
               <select value={form.currency} onChange={set("currency")}>
                 {CURRENCIES.map((c) => <option key={c} value={c}>{currencyLabel(c, lang)}</option>)}
               </select>
+              <FieldHelp>{t("help.currency")}</FieldHelp>
             </label>
           </div>
           <div className="grid-2">
@@ -306,7 +311,7 @@ export default function NewOffer() {
             </label>
             <label className="check">
               <input type="checkbox" checked={form.includeLandlines} onChange={set("includeLandlines")} />
-              <span>{t("newOffer.fieldLandlines")}</span>
+              <span>{t("newOffer.fieldLandlines")}<Help text={t("help.landlines")} /></span>
             </label>
           </div>
           <button className="btn btn-primary btn-block" disabled={busy}>

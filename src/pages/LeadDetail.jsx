@@ -7,6 +7,7 @@ import { useApi } from "../utils/useApi.js";
 import { ErrorBox, Loader } from "../components/States.jsx";
 import { ReasonTags, ScoreBadge, StatusBadge } from "../components/Badges.jsx";
 import SendButtons from "../components/SendButtons.jsx";
+import Help, { FieldHelp } from "../components/Help.jsx";
 import { dateTime, day, joinMeta, money, realCity } from "../utils/format.js";
 import { STATUSES } from "../utils/constants.js";
 
@@ -114,7 +115,7 @@ export default function LeadDetail() {
               <div className="card-title-row">
                 <h2>{t(next?.kind === "followUp" ? "lead.followUpMessage" : "lead.message")}</h2>
                 {next?.kind !== "followUp" && lead.message && (
-                  <button className="btn btn-ghost btn-small" disabled={!!busy} onClick={() => act("write", () => api.post(`/leads/${id}/message`), setLead)}>
+                  <button className="btn btn-ghost btn-small" title={t("help.rewrite")} disabled={!!busy} onClick={() => act("write", () => api.post(`/leads/${id}/message`), setLead)}>
                     ↻ {t("lead.rewrite")}
                   </button>
                 )}
@@ -140,6 +141,7 @@ export default function LeadDetail() {
                     >
                       {t("lead.markSent")}
                     </button>
+                    <Help text={t("help.markSent")} />
                   </div>
                 </>
               ) : (
@@ -186,7 +188,7 @@ export default function LeadDetail() {
               {lead.status !== "rejected" && (
                 <div className="paste">
                   <label className="field">
-                    <span>{t("lead.pasteReply")}</span>
+                    <span>{t("lead.pasteReply")}<Help text={t("help.pasteReply")} /></span>
                     <textarea rows={3} value={replyText} placeholder={t("lead.pasteReplyPlaceholder")} onChange={(e) => setReplyText(e.target.value)} />
                   </label>
                   <button
@@ -214,7 +216,7 @@ export default function LeadDetail() {
           {/* suivi */}
           <section className="card">
             <label className="field">
-              <span>{t("lead.status")}</span>
+              <span>{t("lead.status")}<Help text={t("help.status")} /></span>
               <select value={lead.status} disabled={!!busy} onChange={(e) => (e.target.value === "client" ? setShowClient(true) : updateLead({ status: e.target.value }))}>
                 {STATUSES.map((s) => <option key={s} value={s}>{t(`status.${s}`)}</option>)}
               </select>
@@ -224,6 +226,7 @@ export default function LeadDetail() {
                 {t("lead.becameClient")}
               </button>
             )}
+            {lead.status !== "client" && <FieldHelp>{t("help.becameClient")}</FieldHelp>}
             {lead.status === "client" && (
               <div className="deal">
                 <div className="money-amount small">{money(lead.dealValue, currency, lang)}</div>
@@ -260,7 +263,7 @@ export default function LeadDetail() {
               </form>
             )}
             <label className="field">
-              <span>{t("lead.notes")}</span>
+              <span>{t("lead.notes")}<Help text={t("help.notes")} /></span>
               <textarea rows={3} value={notes} placeholder={t("lead.notesPlaceholder")} onChange={(e) => setNotes(e.target.value)} />
             </label>
             <button className="btn btn-ghost btn-small" disabled={!!busy || notes === (lead.notes || "")} onClick={() => updateLead({ notes })}>
@@ -274,9 +277,9 @@ export default function LeadDetail() {
             {lead.matchReasons?.length ? <ReasonTags reasons={lead.matchReasons} /> : <p className="muted small">{t("lead.noProblem")}</p>}
             {b.address && <p className="small"><strong>{t("lead.address")} :</strong> {b.address}</p>}
             {b.website && <p className="small"><strong>{t("lead.website")} :</strong> <a href={b.website} target="_blank" rel="noreferrer">{b.website.replace(/^https?:\/\/(www\.)?/, "").split(/[/?#]/)[0]}</a></p>}
-            {b.phone && <p className="small">📱 {b.phone}</p>}
-            {b.email && <p className="small">✉️ {b.email}</p>}
-            {b.instagram && <p className="small">📸 <a href={b.instagram} target="_blank" rel="noreferrer">{b.instagram.replace("https://instagram.com/", "@")}</a></p>}
+            {b.phone && <p className="small">{b.phone}</p>}
+            {b.email && <p className="small">{b.email}</p>}
+            {b.instagram && <p className="small"><a href={b.instagram} target="_blank" rel="noreferrer">{b.instagram.replace("https://instagram.com/", "@")}</a></p>}
             <button
               className="btn btn-ghost danger btn-small"
               onClick={() => {
@@ -286,6 +289,7 @@ export default function LeadDetail() {
             >
               {t("lead.block")}
             </button>
+            <FieldHelp>{t("help.block")}</FieldHelp>
           </section>
         </div>
       </div>

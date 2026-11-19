@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import { api, API_URL } from "../api.js";
+import Help from "../components/Help.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import { useApi } from "../utils/useApi.js";
@@ -131,7 +132,7 @@ export default function OfferDetail() {
             <button className="btn btn-ghost btn-small" onClick={findClients} disabled={!!step}>{t("offer.searchAgain")}</button>
           )}
           <Link className="btn btn-ghost btn-small" to={`/offers/${id}/edit`}>{t("offer.edit")}</Link>
-          <a className="btn btn-ghost btn-small" href={`${API_URL}/offers/${id}/export`}>⬇️ {t("offer.export")}</a>
+          <a className="btn btn-ghost btn-small" href={`${API_URL}/offers/${id}/export`} title={t("help.export")}>{t("offer.export")}</a>
           <button className="btn btn-ghost btn-small danger" onClick={remove} disabled={!!step}>{t("common.delete")}</button>
         </div>
       </header>
@@ -142,6 +143,7 @@ export default function OfferDetail() {
           <h2>{t("offer.ctaTitle")}</h2>
           <p className="muted">{t("offer.ctaText", { n: Math.min(5, credits === Infinity ? 5 : credits) })}</p>
           <button className="btn btn-primary btn-large" onClick={findClients}>{t("offer.findClients")}</button>
+          <p className="field-help center">{t("help.findClients")}</p>
         </div>
       )}
 
@@ -197,7 +199,7 @@ export default function OfferDetail() {
         <section className="card unlock-box">
           <div className="card-title-row">
             <div>
-              <h2>{t("offer.moreTitle", { n: locked.length })}</h2>
+              <h2>{t("offer.moreTitle", { n: locked.length })}<Help text={t("help.unlock")} /></h2>
               <p className="muted small">
                 {credits > 0 ? t("offer.moreText", { credits: credits === Infinity ? "∞" : credits }) : t("offer.outOfCredits")}
               </p>

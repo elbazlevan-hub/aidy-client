@@ -4,6 +4,7 @@ import { api } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import LangSwitch from "../components/LangSwitch.jsx";
+import Help, { FieldHelp } from "../components/Help.jsx";
 import { useApi } from "../utils/useApi.js";
 import { ErrorBox, Loader } from "../components/States.jsx";
 import { isUrlOrEmpty } from "../utils/validate.js";
@@ -99,12 +100,13 @@ export default function Settings() {
               <label key={key} className="field">
                 <span>{t(`settings.${key}`)}</span>
                 <input value={values[key] || ""} onChange={set(key)} placeholder={placeholder ? t(placeholder) : key.endsWith("Url") ? "https://" : ""} className={errors[key] ? "invalid" : ""} />
-                {errors[key] && <small className="field-error">{errors[key]}</small>}
+                {errors[key] ? <small className="field-error">{errors[key]}</small> : <FieldHelp>{t(`help.${key}`)}</FieldHelp>}
               </label>
             ))}
             <label className="field">
               <span>{t("settings.faq")}</span>
               <textarea rows={3} value={values.faq || ""} onChange={set("faq")} />
+              <FieldHelp>{t("help.faq")}</FieldHelp>
             </label>
             <button className="btn btn-primary" disabled={saving}>{saved ? t("common.saved") : t("common.save")}</button>
           </form>
@@ -112,7 +114,7 @@ export default function Settings() {
       </section>
 
       <section className="card">
-        <h2>{t("settings.blocklist")}</h2>
+        <h2>{t("settings.blocklist")}<Help text={t("help.blocklist")} /></h2>
         {blocklist.loading && <Loader />}
         <ErrorBox error={blocklist.error} onRetry={blocklist.reload} />
         {blocklist.data?.length === 0 && <p className="muted">{t("settings.blocklistEmpty")}</p>}
