@@ -53,6 +53,10 @@ export default function BusinessInfo({ business: b }) {
         <Row label={t("biz.hours")}>{b.hasHours !== undefined && <YesNo ok={b.hasHours} yes={t("biz.yes")} no={t("biz.missing")} />}</Row>
       </dl>
 
+      {!a.hasWebsite && a.deliveryPlatforms?.length > 0 && (
+        <dl className="biz-list biz-gap"><Row label={t("biz.booking")}><span className="yes">{a.deliveryPlatforms.join(", ")}</span></Row></dl>
+      )}
+
       {a.hasWebsite && (
         <>
           <h4>{t("biz.siteCheck")}</h4>
@@ -65,7 +69,7 @@ export default function BusinessInfo({ business: b }) {
                 <Row label={t("biz.secure")}>{a.https !== undefined && <YesNo ok={a.https} yes={t("biz.yes")} no={t("biz.no")} />}</Row>
                 <Row label={t("biz.mobile")}>{a.mobileFriendly !== undefined && <YesNo ok={a.mobileFriendly} yes={t("biz.yes")} no={t("biz.no")} />}</Row>
                 <Row label={t("biz.updated")}>{a.copyrightYear && <YesNo ok={a.copyrightYear >= year - 2} yes={String(a.copyrightYear)} no={String(a.copyrightYear)} />}</Row>
-                <Row label={t("biz.booking")}><YesNo ok={a.onlineBooking} yes={t("biz.yes")} no={a.whatsappBooking ? t("biz.byWhatsapp") : t("biz.no")} /></Row>
+                <Row label={t("biz.booking")}><YesNo ok={a.onlineBooking} yes={a.deliveryPlatforms?.length ? a.deliveryPlatforms.join(", ") : t("biz.yes")} no={a.whatsappBooking ? t("biz.byWhatsapp") : t("biz.no")} /></Row>
               </>
             )}
           </dl>

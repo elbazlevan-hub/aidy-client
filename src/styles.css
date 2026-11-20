@@ -455,3 +455,4 @@ legend + .field-help { margin-bottom: 0.5rem; }
 .biz-reviews p { margin: 0.2rem 0 0; font-size: 0.85rem; line-height: 1.5; }
 .biz-stars { color: var(--amber); font-size: 0.78rem; letter-spacing: 1px; }
 .biz-maps { margin: 1rem 0 0.8rem; }
+.biz-gap { margin-top: 0.35rem; }

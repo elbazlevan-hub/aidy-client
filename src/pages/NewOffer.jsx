@@ -34,7 +34,7 @@ export default function NewOffer() {
   const { id: editId } = useParams();
   const { t, lang } = useI18n();
   const navigate = useNavigate();
-  const templates = useApi("/offers/templates");
+  const templates = useApi(`/offers/templates?lang=${lang}`); // modèles dans la langue de l'app
   const [mode, setMode] = useState("ai");
   const [form, setForm] = useState({ ...EMPTY, messageLanguage: lang });
   const [showForm, setShowForm] = useState(false);
