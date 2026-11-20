@@ -274,9 +274,15 @@ export default function LeadDetail() {
 
           {/* infos du commerce */}
           <section className="card">
-            <h3>{t("lead.reasons")}</h3>
-            {lead.matchReasons?.length ? <ReasonTags reasons={lead.matchReasons} /> : <p className="muted small">{t("lead.noProblem")}</p>}
-            <BusinessInfo business={b} />
+            {offer && !offer.criteria?.length ? (
+              <h3>{b.name}</h3>
+            ) : (
+              <>
+                <h3>{t("lead.reasons")}</h3>
+                {lead.matchReasons?.length ? <ReasonTags reasons={lead.matchReasons} /> : <p className="muted small">{t("lead.noProblem")}</p>}
+              </>
+            )}
+            <BusinessInfo business={b} diagnosis={offer ? offer.criteria?.length > 0 : true} />
             <button
               className="btn btn-ghost danger btn-small"
               onClick={() => {

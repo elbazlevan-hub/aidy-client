@@ -20,7 +20,8 @@ function YesNo({ ok, yes, no }) {
 }
 
 // tout ce qu'AIDY sait sur le commerce : contacts, fiche Google, site, avis
-export default function BusinessInfo({ business: b }) {
+// diagnosis = false pour les offres sans problème (ex. fournisseur d'eau) : on cache l'analyse du site et des photos
+export default function BusinessInfo({ business: b, diagnosis = true }) {
   const { t } = useI18n();
   const a = b.analysis || {};
   const site = b.website || "";
@@ -39,9 +40,9 @@ export default function BusinessInfo({ business: b }) {
         <Row label={t("biz.email")}>{b.email && <a href={`mailto:${b.email}`}>{b.email}</a>}</Row>
         <Row label="Instagram">{b.instagram && <a href={b.instagram} target="_blank" rel="noreferrer">{b.instagram.replace(/^https?:\/\/(www\.)?instagram\.com\//, "@").replace(/\/$/, "")}</a>}</Row>
         <Row label={t("lead.website")}>
-          {siteKind === "" && <span className="no">{t("biz.noSite")}</span>}
-          {siteKind === "whatsapp" && <span className="no">{t("biz.whatsappLink")}</span>}
-          {siteKind === "social" && <><span className="no">{t("biz.socialOnly")}</span> · <a href={site} target="_blank" rel="noreferrer">{host(site)}</a></>}
+          {siteKind === "" && <span className={diagnosis ? "no" : "muted"}>{t("biz.noSite")}</span>}
+          {siteKind === "whatsapp" && <span className={diagnosis ? "no" : "muted"}>{t("biz.whatsappLink")}</span>}
+          {siteKind === "social" && <><span className={diagnosis ? "no" : "muted"}>{t("biz.socialOnly")}</span> · <a href={site} target="_blank" rel="noreferrer">{host(site)}</a></>}
           {siteKind === "site" && <a href={site} target="_blank" rel="noreferrer">{host(site)}</a>}
         </Row>
       </dl>
@@ -49,15 +50,15 @@ export default function BusinessInfo({ business: b }) {
       <h4>{t("biz.google")}</h4>
       <dl className="biz-list">
         <Row label={t("biz.rating")}>{b.rating ? `★ ${b.rating} · ${t("lead.reviews", { n: b.reviewCount ?? 0 })}` : t("biz.noRating")}</Row>
-        <Row label={t("biz.photos")}>{b.photoCount !== undefined && <YesNo ok={b.photoCount >= 5} yes={b.photoCount >= 10 ? "10+" : String(b.photoCount)} no={String(b.photoCount)} />}</Row>
-        <Row label={t("biz.hours")}>{b.hasHours !== undefined && <YesNo ok={b.hasHours} yes={t("biz.yes")} no={t("biz.missing")} />}</Row>
+        <Row label={t("biz.photos")}>{diagnosis && b.photoCount !== undefined && <YesNo ok={b.photoCount >= 5} yes={b.photoCount >= 10 ? "10+" : String(b.photoCount)} no={String(b.photoCount)} />}</Row>
+        <Row label={t("biz.hours")}>{diagnosis && b.hasHours !== undefined && <YesNo ok={b.hasHours} yes={t("biz.yes")} no={t("biz.missing")} />}</Row>
       </dl>
 
-      {!a.hasWebsite && a.deliveryPlatforms?.length > 0 && (
+      {diagnosis && !a.hasWebsite && a.deliveryPlatforms?.length > 0 && (
         <dl className="biz-list biz-gap"><Row label={t("biz.booking")}><span className="yes">{a.deliveryPlatforms.join(", ")}</span></Row></dl>
       )}
 
-      {a.hasWebsite && (
+      {diagnosis && a.hasWebsite && (
         <>
           <h4>{t("biz.siteCheck")}</h4>
           <dl className="biz-list">
