@@ -89,6 +89,7 @@ export default function Landing() {
         <div className="hero-copy">
           <h1>{t("landing.tagline")}</h1>
           <p className="hero-text">{t("landing.subtitle")}</p>
+          <p className="hero-who">{t("landing.forWho")}</p>
           <div className="hero-actions">
             <Link to="/register" className="btn btn-primary btn-large">{t("landing.start")}</Link>
             <span className="hero-note">{t("landing.free")}</span>
