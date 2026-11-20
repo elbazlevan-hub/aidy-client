@@ -60,7 +60,8 @@ export default function OfferDetail() {
         const r = await api.post(`/offers/${id}/unlock`, { count: Math.min(5, credits) });
         unlocked = r.unlocked;
       }
-      setNotice(t("offer.doneSummary", { found: found.found, problems: withProblem, ready: unlocked }));
+      const allOfType = !offer.data?.offer?.criteria?.length; // offre sans problème à repérer (ex. fournisseur d'eau)
+      setNotice(t(allOfType ? "offer.doneSummaryAll" : "offer.doneSummary", { found: found.found, problems: withProblem, ready: unlocked }));
     } catch (err) {
       setError(explain(err, current));
     } finally {

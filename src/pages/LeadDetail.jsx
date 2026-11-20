@@ -106,7 +106,7 @@ export default function LeadDetail() {
 
       {notice && <div className="alert alert-success">{notice}</div>}
       <ErrorBox error={actionError} />
-      {!lead.matchReasons?.length && <div className="alert alert-warning">{t("lead.noProblemAlert")}</div>}
+      {!lead.matchReasons?.length && offer?.criteria?.length > 0 && <div className="alert alert-warning">{t("lead.noProblemAlert")}</div>}
 
       <div className="lead-grid">
         <div className="col">

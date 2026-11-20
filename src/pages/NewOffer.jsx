@@ -13,7 +13,7 @@ import Help, { FieldHelp } from "../components/Help.jsx";
 
 const EMPTY = {
   title: "", description: "", serviceType: "", categories: "", country: "", cities: "",
-  criteria: [], customCriterion: "", messageLanguage: "fr", price: "", priceOnQuote: false, currency: "USD",
+  criteria: [], customCriterion: "", sellingPoint: "", messageLanguage: "fr", price: "", priceOnQuote: false, currency: "USD",
   dailyLimit: 60, includeLandlines: false,
 };
 
@@ -61,6 +61,8 @@ export default function NewOffer() {
           cities: (o.targetCities?.length ? o.targetCities : [o.targetCity]).filter(Boolean).join(", "),
           criteria: o.criteria || [],
           customCriterion: o.customCriterion || "",
+      sellingPoint: o.sellingPoint || "",
+          sellingPoint: o.sellingPoint || "",
           messageLanguage: o.messageLanguage || "fr",
           price: o.price || "",
           priceOnQuote: Boolean(o.priceOnQuote),
@@ -131,7 +133,6 @@ export default function NewOffer() {
     if (form.serviceType.trim().length < 2) e.serviceType = t("auth.errRequired");
     if (categories.length === 0) e.categories = t("newOffer.errCategories");
     if (!isCountry(form.country)) e.country = t("newOffer.errCountry");
-    if (form.criteria.length === 0) e.criteria = t("newOffer.errCriteria");
     if (!form.priceOnQuote && form.price !== "" && !(Number(form.price) >= 0)) e.price = t("newOffer.errPrice");
     if ((cities.length || 1) * categories.length > 20) e.cities = t("newOffer.errTooMany");
     setErrors(e);
@@ -153,6 +154,7 @@ export default function NewOffer() {
         targetCities: splitList(form.cities),
         criteria: form.criteria,
         customCriterion: form.customCriterion.trim().length >= 5 ? form.customCriterion.trim() : undefined,
+        sellingPoint: form.sellingPoint.trim() || undefined,
         messageLanguage: form.messageLanguage,
         price: form.priceOnQuote ? 0 : Number(form.price) || 0,
         priceOnQuote: form.priceOnQuote,
@@ -260,7 +262,7 @@ export default function NewOffer() {
           </div>
 
           <fieldset className="field">
-            <legend>{t("newOffer.fieldCriteria")}</legend>
+            <legend>{t("newOffer.fieldCriteria")} <em className="muted">({t("common.optional")})</em></legend>
             <FieldHelp>{t("help.criteria")}</FieldHelp>
             <div className="chips">
               {CRITERIA.map((c) => (
@@ -270,7 +272,14 @@ export default function NewOffer() {
               ))}
             </div>
             {errors.criteria && <small className="field-error">{errors.criteria}</small>}
+            {form.criteria.length === 0 && <p className="hint success">{t("newOffer.noCriteria")}</p>}
           </fieldset>
+
+          <label className="field">
+            <span>{t("newOffer.fieldSellingPoint")} <em className="muted">({t("common.optional")})</em></span>
+            <input value={form.sellingPoint} onChange={set("sellingPoint")} maxLength={300} placeholder={t("newOffer.sellingPointPlaceholder")} />
+            <FieldHelp>{t("help.sellingPoint")}</FieldHelp>
+          </label>
 
           <label className="field">
             <span>{t("newOffer.fieldCustom")} <em className="muted">({t("common.optional")})</em></span>
