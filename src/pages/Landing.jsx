@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import Logo from "../components/Logo.jsx";
 import LangSwitch from "../components/LangSwitch.jsx";
-import { money } from "../utils/format.js";
 
 // les points du radar (commerces de la ville) ; "target" = un commerce qui a un problème
 const DOTS = [
@@ -72,7 +71,7 @@ function Radar() {
 
 export default function Landing() {
   const { user } = useAuth();
-  const { t, lang } = useI18n();
+  const { t } = useI18n();
   if (user) return <Navigate to="/today" replace />;
 
   return (
@@ -89,7 +88,18 @@ export default function Landing() {
         <div className="hero-copy">
           <h1>{t("landing.tagline")}</h1>
           <p className="hero-text">{t("landing.subtitle")}</p>
-          <p className="hero-who">{t("landing.forWho")}</p>
+          <div className="fast">
+            <p className="fast-title">{t("landing.fastTitle")}</p>
+            <ul className="fast-stats">
+              <li><strong>5 min</strong><span>{t("landing.fastTime")}</span></li>
+              <li><strong>120</strong><span>{t("landing.fastShops")}</span></li>
+              <li><strong>2 {t("landing.fastClicksUnit")}</strong><span>{t("landing.fastClicks")}</span></li>
+            </ul>
+            <p className="fast-text">{t("landing.fastText")}</p>
+          </div>
+          <p className="money-line">
+            <strong>{t("landing.moneyTitle")}</strong> {t("landing.moneyText")}
+          </p>
           <div className="hero-actions">
             <Link to="/register" className="btn btn-primary btn-large">{t("landing.start")}</Link>
             <span className="hero-note">{t("landing.free")}</span>
@@ -98,37 +108,6 @@ export default function Landing() {
         <Radar />
       </section>
 
-      <section className="how">
-        <h2>{t("landing.howTitle")}</h2>
-        <ol className="how-steps">
-          {[1, 2, 3].map((n) => (
-            <li key={n}>
-              <span className="how-num">{n}</span>
-              <h3>{t(`landing.step${n}`)}</h3>
-              <p>{t(`landing.step${n}Text`)}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="pricing-strip">
-        <div>
-          <h2>{t("landing.packsTitle")}</h2>
-          <p>{t("landing.packsText")}</p>
-        </div>
-        <div className="pricing-prices">
-          <div><strong>{money(0, "USD", lang)}</strong><span>{t("landing.priceFree")}</span></div>
-          <div><strong>{money(29, "USD", lang)}</strong><span>{t("landing.priceStandard")}</span></div>
-          <div><strong>{money(49, "USD", lang)}</strong><span>{t("landing.pricePremium")}</span></div>
-        </div>
-      </section>
-
-      <section className="final-cta">
-        <h2>{t("landing.ctaTitle")}</h2>
-        <Link to="/register" className="btn btn-primary btn-large">{t("landing.start")}</Link>
-      </section>
-
-      <footer className="landing-foot">© 2026 AIDY</footer>
     </div>
   );
 }
