@@ -55,7 +55,7 @@ function Radar() {
         <div className="radar-card-head">
           <div>
             <div className="radar-card-name">{current.name}</div>
-            <div className="radar-card-meta">{current.category}, Lyon</div>
+            <div className="radar-card-meta">{current.category}, Paris</div>
           </div>
           <span className="radar-card-score">{current.score}</span>
         </div>

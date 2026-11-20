@@ -44,5 +44,5 @@ export async function copyText(text) {
 const EVERYWHERE = /^(tou(t|te|tes|s)|partout|all|every|everywhere|whole|any|todas?|todos?|cualquier|כל)(?=\s|$)/i;
 export const realCity = (city) => (city && !EVERYWHERE.test(String(city).trim()) ? city : "");
 
-// "Restaurant · Lyon" sans les morceaux vides
+// "Restaurant · Paris" sans les morceaux vides
 export const joinMeta = (...parts) => parts.filter(Boolean).join(" · ");
