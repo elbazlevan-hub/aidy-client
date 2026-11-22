@@ -187,7 +187,7 @@ const fr = {
     trialUsed: "Votre recherche gratuite est utilisée. Achetez un pack pour chercher à nouveau.",
   },
   lead: {
-    followUpExplainDate: "Ce commerce a déjà reçu votre premier message. Voici la relance, à envoyer seulement s'il ne répond pas : AIDY vous la rappelle le {date} dans « Aujourd'hui ».", followUpExplain: "Ce commerce a déjà reçu votre premier message. Voici la relance, à envoyer seulement s'il ne répond pas.", locked: "Verrouillé",
+    badPhone: "Le numéro ne marche pas", badPhoneConfirm: "Signaler ce numéro comme ne marchant pas ? Il sera caché, et votre crédit vous est rendu si le commerce n'a aucun autre contact.", badPhoneRefunded: "Merci ! Le numéro est caché et votre crédit vous a été rendu.", badPhoneNoRefund_otherContact: "Le numéro est caché. Pas de crédit rendu : vous pouvez encore contacter ce commerce par email ou Instagram.", badPhoneNoRefund_answered: "Le numéro est caché. Pas de crédit rendu : ce commerce a déjà répondu à un message, donc le numéro marchait.", badPhoneNoRefund_limit: "Le numéro est caché. Pas de crédit rendu : vous avez atteint la limite de 3 crédits rendus par mois.", badPhoneNoRefund_alreadyRefunded: "Le numéro est caché. Le crédit de ce commerce a déjà été rendu.", badPhoneNoRefund_unlimited: "Le numéro est caché.", followUpExplainDate: "Ce commerce a déjà reçu votre premier message. Voici la relance, à envoyer seulement s'il ne répond pas : AIDY vous la rappelle le {date} dans « Aujourd'hui ».", followUpExplain: "Ce commerce a déjà reçu votre premier message. Voici la relance, à envoyer seulement s'il ne répond pas.", locked: "Verrouillé",
     unlockOne: "Débloquer (1 crédit)",
     aiIncluded: "Message personnalisé par AIDY inclus",
     hasMobile: "Portable disponible",

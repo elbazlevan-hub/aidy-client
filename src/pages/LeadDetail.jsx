@@ -18,7 +18,7 @@ const CHANNELS = ["whatsapp", "email", "instagram", "phone", "other"];
 export default function LeadDetail() {
   const { id } = useParams();
   const { t, lang } = useI18n();
-  const { user } = useAuth();
+  const { user, refresh } = useAuth();
   const navigate = useNavigate();
   const { data: lead, setData: setLead, loading, error, reload } = useApi(`/leads/${id}`);
   const offerId = lead?.offerId;
@@ -149,6 +149,23 @@ export default function LeadDetail() {
                     </button>
                     <Help text={t("help.markSent")} />
                   </div>
+                  {(b.phone || b.landline) && !lead.badPhoneAt && (
+                    <button
+                      type="button"
+                      className="link-btn muted small"
+                      disabled={!!busy}
+                      onClick={() => {
+                        if (!window.confirm(t("lead.badPhoneConfirm"))) return;
+                        act("badPhone", () => api.post(`/leads/${id}/bad-phone`), (r) => {
+                          setLead(r.lead);
+                          refresh();
+                          setNotice(r.refunded ? t("lead.badPhoneRefunded") : t(`lead.badPhoneNoRefund_${r.reason}`));
+                        });
+                      }}
+                    >
+                      {t("lead.badPhone")}
+                    </button>
+                  )}
                 </>
               ) : (
                 <>
