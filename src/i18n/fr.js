@@ -201,7 +201,7 @@ const fr = {
     noMessage: "Pas encore de message.",
     writeMessage: "Écrire le message avec AIDY",
     rewrite: "Réécrire",
-    sendWhatsapp: "Envoyer sur WhatsApp",
+    sendSms: "Envoyer par SMS", noWhatsappHint: "Pas sur WhatsApp ? Envoyez le même message par SMS, ou appelez.", sendWhatsapp: "Envoyer sur WhatsApp",
     sendEmail: "Envoyer par email",
     copyInstagram: "Copier et ouvrir Instagram",
     copyMessage: "Copier le message",
@@ -265,7 +265,7 @@ const fr = {
     noHours: "Pas d'horaires sur Google",
   },
   channels: {
-    whatsapp: "WhatsApp",
+    whatsapp: "WhatsApp", sms: "SMS",
     email: "Email",
     instagram: "Instagram",
     phone: "Téléphone",

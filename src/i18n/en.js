@@ -81,7 +81,7 @@ const en = {
   lead: {
     unreachable: "This business has no phone, email or Instagram: it can't be contacted. It was removed from your list and won't be offered again (your credit is given back).", badPhone: "The number doesn't work", badPhoneConfirm: "Report this number as not working? It will be hidden, and your credit is given back if the business has no other contact.", badPhoneRefunded: "Thanks! The number is hidden and your credit was given back.", badPhoneNoRefund_otherContact: "The number is hidden. No credit back: you can still contact this business by email or Instagram.", badPhoneNoRefund_answered: "The number is hidden. No credit back: this business has already answered a message, so the number worked.", badPhoneNoRefund_limit: "The number is hidden. No credit back: you reached the limit of 3 credits given back per month.", badPhoneNoRefund_alreadyRefunded: "The number is hidden. The credit for this business was already given back.", badPhoneNoRefund_unlimited: "The number is hidden.", followUpExplainDate: "This business has already received your first message. This is the reminder to send only if they don't answer: AIDY reminds you on {date} in “Today”.", followUpExplain: "This business has already received your first message. This is the reminder to send only if they don't answer.", locked: "Locked", unlockOne: "Unlock (1 credit)", aiIncluded: "Personal message by AIDY included", hasMobile: "Mobile available", hasEmail: "Email available",
     hasInstagram: "Instagram available", hasLandline: "Landline available", score: "Score", reviews: "{n} reviews", message: "AIDY message", followUpMessage: "Follow-up message",
-    noMessage: "No message yet.", writeMessage: "Write the message with AIDY", rewrite: "Rewrite", sendWhatsapp: "Send on WhatsApp", sendEmail: "Send by email",
+    noMessage: "No message yet.", writeMessage: "Write the message with AIDY", rewrite: "Rewrite", sendSms: "Send by SMS", noWhatsappHint: "Not on WhatsApp? Send the same message by SMS, or call.", sendWhatsapp: "Send on WhatsApp", sendEmail: "Send by email",
     copyInstagram: "Copy and open Instagram", copyMessage: "Copy the message", call: "Call", copyHint: "Message copied! Open the chat and paste it (long press → Paste).",
     markSent: "I sent the message", markedSent: "Done! Follow-up planned on {date}.", status: "Status", notes: "Notes", notesPlaceholder: "E.g. replied, call back on Thursday…",
     becameClient: "Became a client 🎉", howMuch: "How much did this client pay you?", dealValue: "Amount", dealHistory: "Amount history",
@@ -98,7 +98,7 @@ const en = {
     noOnlineBooking: "No online booking", lowRating: "Low Google rating", fewReviews: "Few Google reviews", noSocial: "No social media", fewPhotos: "Few photos on Google",
     noInstagram: "No Instagram", noHours: "No opening hours on Google",
   },
-  channels: { whatsapp: "WhatsApp", email: "Email", instagram: "Instagram", phone: "Phone", other: "Other" },
+  channels: { whatsapp: "WhatsApp", sms: "SMS", email: "Email", instagram: "Instagram", phone: "Phone", other: "Other" },
   inbox: { title: "To answer", subtitle: "Leads who replied, most urgent first.", empty: "Nobody is waiting for an answer. 🎉", lastReply: "Their reply", open: "Open" },
   stats: {
     title: "Results", contacted: "Contacted", replied: "Replies", clients: "Clients", replyRate: "Reply rate", clientRate: "Client rate", byChannel: "By channel",

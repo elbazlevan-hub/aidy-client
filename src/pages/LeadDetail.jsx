@@ -12,7 +12,7 @@ import Help, { FieldHelp } from "../components/Help.jsx";
 import { dateTime, day, joinMeta, money, realCity } from "../utils/format.js";
 import { STATUSES } from "../utils/constants.js";
 
-const CHANNELS = ["whatsapp", "email", "instagram", "phone", "other"];
+const CHANNELS = ["whatsapp", "sms", "email", "instagram", "phone", "other"];
 
 // fiche d'un prospect : message, envoi, suivi, réponses
 export default function LeadDetail() {

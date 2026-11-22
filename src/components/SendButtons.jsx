@@ -22,6 +22,11 @@ export default function SendButtons({ links = {}, text }) {
             {t("lead.sendWhatsapp")}
           </a>
         )}
+        {links.sms && (
+          <a className="btn btn-secondary" href={links.sms}>
+            {t("lead.sendSms")}
+          </a>
+        )}
         {links.email && (
           <a className="btn btn-secondary" href={links.email}>
             {t("lead.sendEmail")}
@@ -41,6 +46,7 @@ export default function SendButtons({ links = {}, text }) {
           {t("lead.copyMessage")}
         </button>
       </div>
+      {links.whatsapp && links.sms && <p className="muted small">{t("lead.noWhatsappHint")}</p>}
       {hint && <p className="hint success">{hint}</p>}
     </div>
   );

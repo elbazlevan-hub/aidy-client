@@ -81,7 +81,7 @@ const es = {
   lead: {
     unreachable: "Este negocio no tiene teléfono, email ni Instagram: no se puede contactar. Se quitó de tu lista y no se te volverá a proponer (te devolvemos el crédito).", badPhone: "El número no funciona", badPhoneConfirm: "¿Marcar este número como que no funciona? Se ocultará, y te devolvemos el crédito si el negocio no tiene otro contacto.", badPhoneRefunded: "¡Gracias! El número está oculto y te devolvimos el crédito.", badPhoneNoRefund_otherContact: "El número está oculto. Sin devolución: aún puedes contactar a este negocio por email o Instagram.", badPhoneNoRefund_answered: "El número está oculto. Sin devolución: este negocio ya respondió un mensaje, así que el número funcionaba.", badPhoneNoRefund_limit: "El número está oculto. Sin devolución: llegaste al límite de 3 créditos devueltos por mes.", badPhoneNoRefund_alreadyRefunded: "El número está oculto. El crédito de este negocio ya fue devuelto.", badPhoneNoRefund_unlimited: "El número está oculto.", followUpExplainDate: "Este negocio ya recibió tu primer mensaje. Este es el recordatorio, para enviar solo si no responde: AIDY te lo recuerda el {date} en «Hoy».", followUpExplain: "Este negocio ya recibió tu primer mensaje. Este es el recordatorio, para enviar solo si no responde.", locked: "Bloqueado", unlockOne: "Desbloquear (1 crédito)", aiIncluded: "Mensaje personalizado por AIDY incluido", hasMobile: "Móvil disponible", hasEmail: "Email disponible",
     hasInstagram: "Instagram disponible", hasLandline: "Fijo disponible", score: "Puntuación", reviews: "{n} reseñas", message: "Mensaje de AIDY", followUpMessage: "Mensaje de recordatorio",
-    noMessage: "Aún no hay mensaje.", writeMessage: "Escribir el mensaje con AIDY", rewrite: "Reescribir", sendWhatsapp: "Enviar por WhatsApp", sendEmail: "Enviar por email",
+    noMessage: "Aún no hay mensaje.", writeMessage: "Escribir el mensaje con AIDY", rewrite: "Reescribir", sendSms: "Enviar por SMS", noWhatsappHint: "¿No tiene WhatsApp? Envía el mismo mensaje por SMS, o llama.", sendWhatsapp: "Enviar por WhatsApp", sendEmail: "Enviar por email",
     copyInstagram: "Copiar y abrir Instagram", copyMessage: "Copiar el mensaje", call: "Llamar", copyHint: "¡Mensaje copiado! Abre la conversación y pégalo (pulsación larga → Pegar).",
     markSent: "He enviado el mensaje", markedSent: "¡Anotado! Recordatorio previsto el {date}.", status: "Estado", notes: "Notas", notesPlaceholder: "Ej. respondió, llamar el jueves…",
     becameClient: "Ya es cliente 🎉", howMuch: "¿Cuánto te pagó este cliente?", dealValue: "Importe", dealHistory: "Historial del importe",
@@ -98,7 +98,7 @@ const es = {
     noOnlineBooking: "Sin reservas online", lowRating: "Nota de Google baja", fewReviews: "Pocas reseñas en Google", noSocial: "Sin redes sociales", fewPhotos: "Pocas fotos en Google",
     noInstagram: "Sin Instagram", noHours: "Sin horarios en Google",
   },
-  channels: { whatsapp: "WhatsApp", email: "Email", instagram: "Instagram", phone: "Teléfono", other: "Otro" },
+  channels: { whatsapp: "WhatsApp", sms: "SMS", email: "Email", instagram: "Instagram", phone: "Teléfono", other: "Otro" },
   inbox: { title: "Por responder", subtitle: "Los prospectos que respondieron, los más urgentes primero.", empty: "Nadie espera respuesta. 🎉", lastReply: "Su respuesta", open: "Abrir" },
   stats: {
     title: "Resultados", contacted: "Contactados", replied: "Respuestas", clients: "Clientes", replyRate: "Tasa de respuesta", clientRate: "Tasa de clientes", byChannel: "Por canal",
