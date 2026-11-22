@@ -79,7 +79,7 @@ const en = {
     outOfCredits: "No credits left: buy a pack to unlock more leads.", trialUsed: "Your free search is used. Buy a pack to search again.",
   },
   lead: {
-    locked: "Locked", unlockOne: "Unlock (1 credit)", aiIncluded: "Personal message by AIDY included", hasMobile: "Mobile available", hasEmail: "Email available",
+    followUpExplainDate: "This business has already received your first message. This is the reminder to send only if they don't answer: AIDY reminds you on {date} in “Today”.", followUpExplain: "This business has already received your first message. This is the reminder to send only if they don't answer.", locked: "Locked", unlockOne: "Unlock (1 credit)", aiIncluded: "Personal message by AIDY included", hasMobile: "Mobile available", hasEmail: "Email available",
     hasInstagram: "Instagram available", hasLandline: "Landline available", score: "Score", reviews: "{n} reviews", message: "AIDY message", followUpMessage: "Follow-up message",
     noMessage: "No message yet.", writeMessage: "Write the message with AIDY", rewrite: "Rewrite", sendWhatsapp: "Send on WhatsApp", sendEmail: "Send by email",
     copyInstagram: "Copy and open Instagram", copyMessage: "Copy the message", call: "Call", copyHint: "Message copied! Open the chat and paste it (long press → Paste).",

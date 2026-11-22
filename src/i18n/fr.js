@@ -187,7 +187,7 @@ const fr = {
     trialUsed: "Votre recherche gratuite est utilisée. Achetez un pack pour chercher à nouveau.",
   },
   lead: {
-    locked: "Verrouillé",
+    followUpExplainDate: "Ce commerce a déjà reçu votre premier message. Voici la relance, à envoyer seulement s'il ne répond pas : AIDY vous la rappelle le {date} dans « Aujourd'hui ».", followUpExplain: "Ce commerce a déjà reçu votre premier message. Voici la relance, à envoyer seulement s'il ne répond pas.", locked: "Verrouillé",
     unlockOne: "Débloquer (1 crédit)",
     aiIncluded: "Message personnalisé par AIDY inclus",
     hasMobile: "Portable disponible",

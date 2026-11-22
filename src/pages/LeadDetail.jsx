@@ -121,6 +121,11 @@ export default function LeadDetail() {
                   </button>
                 )}
               </div>
+              {next?.kind === "followUp" && (
+                <p className="muted small">
+                  {lead.followUpAt ? t("lead.followUpExplainDate", { date: day(lead.followUpAt, lang) }) : t("lead.followUpExplain")}
+                </p>
+              )}
               {next?.text ? (
                 <>
                   {next.subject && <p className="subject">{next.subject}</p>}

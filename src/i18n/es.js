@@ -79,7 +79,7 @@ const es = {
     outOfCredits: "Sin créditos: compra un pack para desbloquear más prospectos.", trialUsed: "Tu búsqueda gratuita ya se usó. Compra un pack para buscar de nuevo.",
   },
   lead: {
-    locked: "Bloqueado", unlockOne: "Desbloquear (1 crédito)", aiIncluded: "Mensaje personalizado por AIDY incluido", hasMobile: "Móvil disponible", hasEmail: "Email disponible",
+    followUpExplainDate: "Este negocio ya recibió tu primer mensaje. Este es el recordatorio, para enviar solo si no responde: AIDY te lo recuerda el {date} en «Hoy».", followUpExplain: "Este negocio ya recibió tu primer mensaje. Este es el recordatorio, para enviar solo si no responde.", locked: "Bloqueado", unlockOne: "Desbloquear (1 crédito)", aiIncluded: "Mensaje personalizado por AIDY incluido", hasMobile: "Móvil disponible", hasEmail: "Email disponible",
     hasInstagram: "Instagram disponible", hasLandline: "Fijo disponible", score: "Puntuación", reviews: "{n} reseñas", message: "Mensaje de AIDY", followUpMessage: "Mensaje de recordatorio",
     noMessage: "Aún no hay mensaje.", writeMessage: "Escribir el mensaje con AIDY", rewrite: "Reescribir", sendWhatsapp: "Enviar por WhatsApp", sendEmail: "Enviar por email",
     copyInstagram: "Copiar y abrir Instagram", copyMessage: "Copiar el mensaje", call: "Llamar", copyHint: "¡Mensaje copiado! Abre la conversación y pégalo (pulsación larga → Pegar).",
