@@ -124,7 +124,7 @@ export default function LeadDetail() {
               {next?.text ? (
                 <>
                   {next.subject && <p className="subject">{next.subject}</p>}
-                  <pre className="message">{next.text}</pre>
+                  <pre className="message" dir="auto">{next.text}</pre>
                   <SendButtons links={lead.links} text={next.text} />
                   <div className="sent-row">
                     <select value={channel} onChange={(e) => setChannel(e.target.value)} aria-label={t("lead.status")}>
@@ -164,11 +164,11 @@ export default function LeadDetail() {
             <section className="card">
               <h2>{t("lead.conversation")}</h2>
               <div className="conversation">
-                {lead.message && <div className="bubble me"><pre>{lead.message}</pre></div>}
+                {lead.message && <div className="bubble me"><pre dir="auto">{lead.message}</pre></div>}
                 {(lead.replies || []).map((r, i) => (
                   <div key={i} className={`bubble ${r.from === "me" ? "me" : "them"}`}>
                     {r.label && <span className="bubble-label">{t(`labels.${r.label}`)}</span>}
-                    <pre>{r.text}</pre>
+                    <pre dir="auto">{r.text}</pre>
                     <span className="bubble-time">{dateTime(r.at, lang)}</span>
                   </div>
                 ))}
@@ -177,7 +177,7 @@ export default function LeadDetail() {
               {lead.suggestedReply && (
                 <div className="assistant">
                   <h3>{t("lead.aidyReply")}</h3>
-                  <pre className="message">{lead.suggestedReply}</pre>
+                  <pre className="message" dir="auto">{lead.suggestedReply}</pre>
                   {assistant?.missingInfo?.length > 0 && <p className="hint">{t("lead.missingInfo", { list: assistant.missingInfo.join(", ") })}</p>}
                   <SendButtons links={assistant?.links || {}} text={lead.suggestedReply} />
                   <button className="btn btn-primary" disabled={!!busy} onClick={() => act("sent", () => api.post(`/leads/${id}/reply/sent`, {}), (r) => { setLead(r); setAssistant(null); })}>
@@ -190,7 +190,7 @@ export default function LeadDetail() {
                 <div className="paste">
                   <label className="field">
                     <span>{t("lead.pasteReply")}<Help text={t("help.pasteReply")} /></span>
-                    <textarea rows={3} value={replyText} placeholder={t("lead.pasteReplyPlaceholder")} onChange={(e) => setReplyText(e.target.value)} />
+                    <textarea rows={3} dir="auto" value={replyText} placeholder={t("lead.pasteReplyPlaceholder")} onChange={(e) => setReplyText(e.target.value)} />
                   </label>
                   <button
                     className="btn btn-accent"
