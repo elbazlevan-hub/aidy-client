@@ -135,7 +135,7 @@ const en = {
     openMaps: "Open on Google Maps",
   },
   help: {
-    sellingPoint: "Why should they choose you? AIDY puts it in every message. Only write what is true.",
+    contactPreference: "The question at the end of each message follows your choice. Example by message: “Can I send you a few examples here?”", sellingPoint: "Why should they choose you? AIDY puts it in every message. Only write what is true.",
     modes: "Not sure? Choose “Describe it to AIDY”: describe what you sell in one sentence and AIDY fills in everything. You can change it after.",
     describe: "Example: “I build websites with online booking for restaurants in Paris.” The more precise, the better the results.",
     title: "Only for you, to recognize this offer in your list. Businesses never see it.",
@@ -201,7 +201,7 @@ const en = {
     },
   },
   settings: {
-    otherLanguage: "Other languages", chooseLanguage: "Choose a language…", otherLanguageHint: "These languages are translated by AIDY's AI.", translating: "Translating the app… it stays in English for a few seconds.", translateError: "The translation didn't work. Try again in a moment.", title: "Settings", account: "My account", plan: "Plan", plans: { free: "Free trial", paid: "Standard", premium: "Premium" }, language: "App language",
+    contactPreference: "How do you prefer to continue with businesses?", contact: { message: "By message (WhatsApp, email…)", call: "By phone call", either: "Let them choose" }, otherLanguage: "Other languages", chooseLanguage: "Choose a language…", otherLanguageHint: "These languages are translated by AIDY's AI.", translating: "Translating the app… it stays in English for a few seconds.", translateError: "The translation didn't work. Try again in a moment.", title: "Settings", account: "My account", plan: "Plan", plans: { free: "Free trial", paid: "Standard", premium: "Premium" }, language: "App language",
     profile: "My info sheet", profileHint: "AIDY uses it to sign your messages and answer your leads, without making anything up.",
     signature: "Signature", signaturePlaceholder: "E.g. your first name or company", priceInfo: "Your prices", pricePlaceholder: "E.g. Website $900, with booking $1,200",
     deliveryTime: "Delivery time", deliveryPlaceholder: "E.g. 7 days", portfolioUrl: "Link to your work", bookingUrl: "Booking link", guarantees: "Guarantees", faq: "Other useful info",

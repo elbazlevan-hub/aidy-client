@@ -135,7 +135,7 @@ const es = {
     openMaps: "Ver en Google Maps",
   },
   help: {
-    sellingPoint: "¿Por qué elegirte? AIDY lo pone en cada mensaje. Escribe solo lo que es verdad.",
+    contactPreference: "La pregunta al final de cada mensaje sigue tu elección. Ejemplo por mensaje: «¿Te envío algunos ejemplos por aquí?»", sellingPoint: "¿Por qué elegirte? AIDY lo pone en cada mensaje. Escribe solo lo que es verdad.",
     modes: "¿No sabes? Elige «Describir con AIDY»: describe lo que vendes en una frase y AIDY lo rellena todo. Podrás cambiarlo después.",
     describe: "Ejemplo: «Creo webs con reservas en línea para restaurantes en Paris.» Cuanto más preciso, mejores resultados.",
     title: "Solo para ti, para reconocer esta oferta en tu lista. Los negocios nunca la ven.",
@@ -201,7 +201,7 @@ const es = {
     },
   },
   settings: {
-    otherLanguage: "Otros idiomas", chooseLanguage: "Elegir un idioma…", otherLanguageHint: "Estos idiomas los traduce la IA de AIDY.", translating: "Traduciendo la app… sigue en inglés unos segundos.", translateError: "La traducción no funcionó. Inténtalo de nuevo en un momento.", title: "Ajustes", account: "Mi cuenta", plan: "Plan", plans: { free: "Prueba gratuita", paid: "Estándar", premium: "Premium" }, language: "Idioma de la aplicación",
+    contactPreference: "¿Cómo prefieres seguir con los negocios?", contact: { message: "Por mensaje (WhatsApp, email…)", call: "Por llamada", either: "Que elija el negocio" }, otherLanguage: "Otros idiomas", chooseLanguage: "Elegir un idioma…", otherLanguageHint: "Estos idiomas los traduce la IA de AIDY.", translating: "Traduciendo la app… sigue en inglés unos segundos.", translateError: "La traducción no funcionó. Inténtalo de nuevo en un momento.", title: "Ajustes", account: "Mi cuenta", plan: "Plan", plans: { free: "Prueba gratuita", paid: "Estándar", premium: "Premium" }, language: "Idioma de la aplicación",
     profile: "Mi ficha de información", profileHint: "AIDY la usa para firmar tus mensajes y responder a tus prospectos, sin inventar nada.",
     signature: "Firma", signaturePlaceholder: "Ej. tu nombre o tu empresa", priceInfo: "Tus precios", pricePlaceholder: "Ej. Web 900 $, con reservas 1.200 $",
     deliveryTime: "Plazos", deliveryPlaceholder: "Ej. 7 días", portfolioUrl: "Enlace a tus trabajos", bookingUrl: "Enlace para reservar cita", guarantees: "Garantías", faq: "Otra información útil",

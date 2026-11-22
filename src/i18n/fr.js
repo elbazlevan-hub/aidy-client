@@ -322,7 +322,7 @@ const fr = {
     openMaps: "Voir sur Google Maps",
   },
   help: {
-    sellingPoint: "Pourquoi vous choisir ? AIDY le met dans chaque message. N'écrivez que ce qui est vrai.",
+    contactPreference: "La question à la fin de chaque message suit votre choix. Exemple par message : « Je vous envoie quelques exemples ici ? »", sellingPoint: "Pourquoi vous choisir ? AIDY le met dans chaque message. N'écrivez que ce qui est vrai.",
     modes: "Pas sûr ? Choisissez « Décrire avec AIDY » : décrivez ce que vous vendez en une phrase, AIDY remplit tout. Vous pourrez modifier ensuite.",
     describe: "Exemple : « Je crée des sites avec réservation en ligne pour les restaurants à Paris. » Plus c'est précis, meilleurs sont les résultats.",
     title: "Seulement pour vous, pour reconnaître cette offre dans votre liste. Les commerces ne la voient jamais.",
@@ -388,7 +388,7 @@ const fr = {
     },
   },
   settings: {
-    otherLanguage: "Autres langues", chooseLanguage: "Choisir une langue…", otherLanguageHint: "Ces langues sont traduites par l'IA d'AIDY.", translating: "Traduction de l'app en cours… elle reste en anglais quelques secondes.", translateError: "La traduction n'a pas marché. Réessayez dans un instant.", title: "Réglages",
+    contactPreference: "Comment préférez-vous continuer avec les commerces ?", contact: { message: "Par message (WhatsApp, email…)", call: "Par appel", either: "Au choix du commerce" }, otherLanguage: "Autres langues", chooseLanguage: "Choisir une langue…", otherLanguageHint: "Ces langues sont traduites par l'IA d'AIDY.", translating: "Traduction de l'app en cours… elle reste en anglais quelques secondes.", translateError: "La traduction n'a pas marché. Réessayez dans un instant.", title: "Réglages",
     account: "Mon compte",
     plan: "Formule",
     plans: { free: "Essai gratuit", paid: "Standard", premium: "Premium" },

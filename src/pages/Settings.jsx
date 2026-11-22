@@ -114,6 +114,13 @@ export default function Settings() {
         <ErrorBox error={profile.error || error} onRetry={profile.error ? profile.reload : undefined} />
         {profile.data && (
           <form onSubmit={save} noValidate>
+            <label className="field">
+              <span>{t("settings.contactPreference")}</span>
+              <select value={values.contactPreference || "message"} onChange={set("contactPreference")}>
+                {["message", "call", "either"].map((v) => <option key={v} value={v}>{t(`settings.contact.${v}`)}</option>)}
+              </select>
+              <FieldHelp>{t("help.contactPreference")}</FieldHelp>
+            </label>
             {FIELDS.map(([key, placeholder]) => (
               <label key={key} className="field">
                 <span>{t(`settings.${key}`)}</span>
