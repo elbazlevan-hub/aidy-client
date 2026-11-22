@@ -105,6 +105,7 @@ export default function LeadDetail() {
       </header>
 
       {notice && <div className="alert alert-success">{notice}</div>}
+      {lead.unreachable && <div className="alert alert-warning">{t("lead.unreachable")}</div>}
       <ErrorBox error={actionError} />
       {!lead.matchReasons?.length && offer?.criteria?.length > 0 && <div className="alert alert-warning">{t("lead.noProblemAlert")}</div>}
 
