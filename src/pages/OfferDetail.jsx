@@ -70,13 +70,21 @@ export default function OfferDetail() {
     }
   }
 
-  async function unlock(leadId) {
+  // leadId = un seul commerce ; sinon les `count` meilleurs (par paquets de 20 pour que chaque appel reste court)
+  async function unlock(leadId, count = 5) {
     setError(null);
     setNotice("");
     setStep("unlock");
     try {
       if (leadId) await api.post(`/leads/${leadId}/unlock`);
-      else await api.post(`/offers/${id}/unlock`, { count: Math.min(5, credits) });
+      else {
+        let left = Math.min(count, credits);
+        while (left > 0) {
+          const r = await api.post(`/offers/${id}/unlock`, { count: Math.min(20, left) });
+          if (!r.unlocked) break; // plus rien à débloquer
+          left -= r.unlocked;
+        }
+      }
     } catch (err) {
       setError(explain(err, "unlock"));
     } finally {
@@ -209,9 +217,24 @@ export default function OfferDetail() {
               <Link className="btn btn-primary" to="/packs">{t("nav.buyCredits")}</Link>
             )}
             {credits > 0 && (
-              <button className="btn btn-primary" onClick={() => unlock()}>
-                {t("offer.unlock", { n: Math.min(5, credits === Infinity ? 5 : credits, locked.length) })}
-              </button>
+              <div className="unlock-actions">
+                <button className="btn btn-secondary" disabled={!!step} onClick={() => unlock()}>
+                  {t("offer.unlock", { n: Math.min(5, credits === Infinity ? 5 : credits, locked.length) })}
+                </button>
+                {Math.min(credits, locked.length) > 5 && (
+                  <button
+                    className="btn btn-primary"
+                    disabled={!!step}
+                    onClick={() => {
+                      const n = Math.min(credits, locked.length);
+                      const ask = credits === Infinity ? t("offer.unlockAllConfirmFree", { n }) : t("offer.unlockAllConfirm", { n });
+                      if (window.confirm(ask)) unlock(null, n);
+                    }}
+                  >
+                    {t("offer.unlockAll", { n: Math.min(credits, locked.length) })}
+                  </button>
+                )}
+              </div>
             )}
           </div>
           <button className="btn btn-ghost btn-small" onClick={() => setShowLocked(!showLocked)}>

@@ -164,7 +164,7 @@ const fr = {
     errTooMany: "Villes × catégories : 20 maximum",
   },
   offer: {
-    search: "Rechercher les commerces", edit: "Modifier",
+    unlockAll: "Tout débloquer ({n})", unlockAllConfirm: "Débloquer {n} commerces ? Cela utilise {n} crédits. AIDY écrit tous leurs messages (ça peut prendre quelques minutes).", unlockAllConfirmFree: "Débloquer {n} commerces ? AIDY écrit tous leurs messages (ça peut prendre quelques minutes).", search: "Rechercher les commerces", edit: "Modifier",
     searching: "Recherche sur Google…",
     analyze: "Analyser les sites",
     analyzing: "Analyse des sites… (environ 1 minute)",
