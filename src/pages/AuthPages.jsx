@@ -7,11 +7,26 @@ import Logo from "../components/Logo.jsx";
 import LangSwitch from "../components/LangSwitch.jsx";
 import { isDisposableEmail, isEmail, isStrongPassword } from "../utils/validate.js";
 
-function Field({ label, error, hint, ...props }) {
+// un champ de formulaire ; pour un mot de passe, un petit œil permet de l'afficher
+export function Field({ label, error, hint, extra, ...props }) {
+  const { t } = useI18n();
+  const [show, setShow] = useState(false);
+  const isPassword = props.type === "password";
   return (
     <label className="field">
-      <span>{label}</span>
-      <input {...props} className={error ? "invalid" : ""} />
+      <span className="field-label-row">{label}{extra}</span>
+      <span className={isPassword ? "password-wrap" : undefined}>
+        <input {...props} type={isPassword && show ? "text" : props.type} className={error ? "invalid" : ""} />
+        {isPassword && (
+          <button type="button" className="eye-btn" onClick={() => setShow(!show)} aria-label={t(show ? "auth.hidePassword" : "auth.showPassword")} title={t(show ? "auth.hidePassword" : "auth.showPassword")}>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+              <circle cx="12" cy="12" r="3" />
+              {show && <path d="M3 3l18 18" />}
+            </svg>
+          </button>
+        )}
+      </span>
       {error ? <small className="field-error">{error}</small> : hint && <small className="muted">{hint}</small>}
     </label>
   );
@@ -85,6 +100,7 @@ function AuthForm({ mode }) {
           error={errors.password}
           hint={isRegister ? t("auth.passwordHint") : ""}
           autoComplete={isRegister ? "new-password" : "current-password"}
+          extra={!isRegister && <Link to="/forgot-password" className="forgot-link">{t("auth.forgot")}</Link>}
         />
         <button className="btn btn-primary btn-block" disabled={busy}>
           {busy ? t("common.loading") : t(isRegister ? "auth.submitRegister" : "auth.submitLogin")}

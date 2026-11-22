@@ -1,6 +1,6 @@
 import { useI18n, LANGUAGES } from "../i18n/I18nContext.jsx";
 
-// changer la langue en un clic : EN · FR · ES
+// changer la langue en un clic : EN · FR (les autres langues sont dans les Réglages)
 export default function LangSwitch({ className = "" }) {
   const { lang, setLang } = useI18n();
   return (

@@ -34,7 +34,7 @@ Les pages après connexion sont protégées (`ProtectedRoute`) et partagent la m
 ## Technique
 - `useState`, `useEffect`, `useContext` : `AuthContext` (utilisateur connecté, crédits), `I18nContext` (langue)
 - Hook maison `useApi(path)` : `{ data, loading, error, reload }`
-- Langues : français, anglais, espagnol (`src/i18n`)
+- Langues : anglais et français (traduits à la main, `src/i18n`). Dans les Réglages, on peut choisir une vingtaine d'autres langues (les plus parlées) : l'IA d'AIDY traduit l'app (à l'avance avec `server/scripts/pretranslate.js`) (route `POST /api/i18n/:lang`), puis la traduction est gardée (base de données + navigateur). Les langues de droite à gauche (arabe, hébreu…) s'affichent à l'envers automatiquement.
 - Validation des formulaires côté client (`src/utils/validate.js`) : email, mot de passe fort, emails jetables refusés, URLs, prix… Le serveur revérifie tout avec Zod
 - États de chargement, d'erreur et listes vides sur chaque écran (`components/States.jsx`)
 - Responsive : menu à gauche sur ordinateur, en bas sur téléphone

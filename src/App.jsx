@@ -5,6 +5,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Layout from "./components/Layout.jsx";
 import Landing from "./pages/Landing.jsx";
 import { Login, Register } from "./pages/AuthPages.jsx";
+import { ForgotPassword, ResetPassword } from "./pages/PasswordPages.jsx";
 import Today from "./pages/Today.jsx";
 import Offers from "./pages/Offers.jsx";
 import NewOffer from "./pages/NewOffer.jsx";
@@ -25,6 +26,8 @@ export default function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             {/* pages réservées aux utilisateurs connectés */}
             <Route element={<ProtectedRoute />}>
               <Route element={<Layout />}>

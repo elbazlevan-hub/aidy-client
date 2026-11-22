@@ -86,7 +86,10 @@ export default function Landing() {
 
       <section className="hero">
         <div className="hero-copy">
-          <h1>{t("landing.tagline")}</h1>
+          <h1>
+            {/* une phrase par ligne : « De nouveaux clients. » / « Zéro effort. » */}
+            {t("landing.tagline").split(/(?<=\.)\s+/).map((part) => <span key={part} className="h1-line">{part}</span>)}
+          </h1>
           <p className="hero-text">{t("landing.subtitle")}</p>
           <div className="fast">
             <p className="fast-title">{t("landing.fastTitle")}</p>

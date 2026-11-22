@@ -4,6 +4,7 @@ import { api } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import LangSwitch from "../components/LangSwitch.jsx";
+import { WORLD_LANGUAGE_CODES, nativeName, localName } from "../i18n/worldLanguages.js";
 import Help, { FieldHelp } from "../components/Help.jsx";
 import { useApi } from "../utils/useApi.js";
 import { ErrorBox, Loader } from "../components/States.jsx";
@@ -22,7 +23,7 @@ const FIELDS = [
 export default function Settings() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const { t, lang, setLang } = useI18n();
+  const { t, lang, setLang, translating, translateError } = useI18n();
   const profile = useApi("/profile");
   const blocklist = useApi("/blocklist");
   const [values, setValues] = useState({});
@@ -84,6 +85,23 @@ export default function Settings() {
           <span>{t("settings.language")}</span>
           <LangSwitch className="lang-large" />
         </div>
+        <label className="field">
+          <span>{t("settings.otherLanguage")}</span>
+          <select value={["en", "fr"].includes(lang) ? "" : lang} onChange={(e) => e.target.value && setLang(e.target.value)}>
+            <option value="">{t("settings.chooseLanguage")}</option>
+            {WORLD_LANGUAGE_CODES
+              .map((code) => ({ code, native: nativeName(code), local: localName(code, lang) }))
+              .sort((a, b) => a.native.localeCompare(b.native))
+              .map((l) => (
+                <option key={l.code} value={l.code}>
+                  {l.native}{l.local.toLowerCase() !== l.native.toLowerCase() ? ` (${l.local})` : ""}
+                </option>
+              ))}
+          </select>
+          <small className="muted">{t("settings.otherLanguageHint")}</small>
+          {translating && <small className="muted" role="status">{t("settings.translating")}</small>}
+          {translateError && <small className="danger" role="alert">{t("settings.translateError")}</small>}
+        </label>
         <button className="btn btn-ghost btn-small" onClick={async () => { await logout(); navigate("/"); }}>
           {t("nav.logout")}
         </button>
