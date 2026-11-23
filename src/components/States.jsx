@@ -15,7 +15,8 @@ export function Loader({ text }) {
 export function ErrorBox({ error, onRetry }) {
   const { t } = useI18n();
   if (!error) return null;
-  const text = error.message === "network" ? t("common.network") : error.message || t("common.error");
+  const text =
+    error.message === "network" ? t("common.network") : error.message === "tooMany" ? t("common.tooMany") : error.message || t("common.error");
   return (
     <div className="alert alert-error" role="alert">
       <span>{text}</span>

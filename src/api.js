@@ -25,6 +25,8 @@ async function request(method, path, body) {
   }
   // 502/503/504 : le proxy ne trouve pas le serveur (arrêté ou en train de redémarrer)
   if ([502, 503, 504].includes(response.status)) throw new ApiError(response.status, "network");
+  // 429 : trop d'essais (protection contre les robots qui testent des mots de passe)
+  if (response.status === 429) throw new ApiError(429, "tooMany");
   if (response.status === 204) return null;
   const data = await response.json().catch(() => null);
   if (!response.ok) {

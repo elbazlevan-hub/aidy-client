@@ -1,6 +1,6 @@
 const fr = {
   common: {
-    loading: "Chargement…",
+    tooMany: "Trop d'essais. Pour votre sécurité, réessayez dans 15 minutes.", loading: "Chargement…",
     retry: "Réessayer",
     save: "Enregistrer",
     saved: "Enregistré ✓",
