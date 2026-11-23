@@ -49,6 +49,7 @@ export default function Packs() {
         <div className="credit-balance">
           <span className="muted small">{t("packs.balance")}</span>
           <strong>{user?.role === "admin" ? "∞" : credits}</strong>
+          {data.jobCredits > 0 && <span className="small">{t("packs.jobBalance", { n: data.jobCredits })}</span>}
           <span className="small">{t(`settings.plans.${plan}`)}</span>
         </div>
       </div>
@@ -66,7 +67,7 @@ export default function Packs() {
 
       <div className="pack-grid">
         {data.packs.map((p) => {
-          const locked = p.needsPack && plan === "free";
+          const locked = p.needsPack && !["paid", "premium"].includes(plan);
           const perLead = new Intl.NumberFormat(lang, { style: "currency", currency: p.currency, minimumFractionDigits: 2 }).format(p.price / p.credits);
           return (
             <article key={p.id} className={`card pack-card${p.id === "premium" ? " pack-best" : ""}${locked ? " pack-locked" : ""}`}>

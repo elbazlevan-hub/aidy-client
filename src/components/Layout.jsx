@@ -11,6 +11,7 @@ const LINKS = [
   { to: "/inbox", key: "nav.inbox", icon: "inbox" },
   { to: "/stats", key: "nav.stats", icon: "stats" },
   { to: "/packs", key: "nav.packs", icon: "packs" },
+  { to: "/guide", key: "nav.guide", icon: "guide" },
   { to: "/settings", key: "nav.settings", icon: "settings" },
 ];
 
@@ -33,6 +34,7 @@ export default function Layout() {
     <Link to="/packs" className="credit-link" title={t("nav.buyCredits")}>
       {user?.plan === "premium" && <span className="plan-star" aria-hidden="true">★</span>}
       {unlimited ? "∞" : t("nav.credits", { n: user?.credits ?? 0 })}
+      {!unlimited && user?.jobCredits > 0 && <span className="small"> · {t("nav.jobCredits", { n: user.jobCredits })}</span>}
       <span className="credit-plus" aria-hidden="true">+</span>
     </Link>
   );

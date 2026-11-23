@@ -15,6 +15,7 @@ import Inbox from "./pages/Inbox.jsx";
 import Stats from "./pages/Stats.jsx";
 import Settings from "./pages/Settings.jsx";
 import Packs from "./pages/Packs.jsx";
+import Guide from "./pages/Guide.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
                 <Route path="/stats" element={<Stats />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/packs" element={<Packs />} />
+                <Route path="/guide" element={<Guide />} />
               </Route>
             </Route>
             <Route path="*" element={<NotFound />} />

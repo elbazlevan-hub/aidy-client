@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { api } from "../api.js";
 import { useI18n } from "../i18n/I18nContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useApi } from "../utils/useApi.js";
 import { ErrorBox, Loader } from "../components/States.jsx";
 import { splitList } from "../utils/format.js";
-import { isCountry } from "../utils/validate.js";
+import { isCountry, isUrlOrEmpty } from "../utils/validate.js";
 import { CRITERIA, CURRENCIES, MESSAGE_LANGUAGES, COUNTRY_LANGUAGE, currencyLabel } from "../utils/constants.js";
 import { countryList } from "../utils/countries.js";
 import CityPicker from "../components/CityPicker.jsx";
@@ -13,7 +14,7 @@ import Help, { FieldHelp } from "../components/Help.jsx";
 
 const EMPTY = {
   title: "", description: "", serviceType: "", categories: "", country: "", cities: "",
-  criteria: [], customCriterion: "", sellingPoint: "", messageLanguage: "fr", price: "", priceOnQuote: false, currency: "USD",
+  criteria: [], customCriterion: "", sellingPoint: "", cvUrl: "", messageLanguage: "fr", price: "", priceOnQuote: false, currency: "USD",
   dailyLimit: 60, includeLandlines: false,
 };
 
@@ -33,9 +34,11 @@ function CountrySelect({ value, onChange, countries, invalid, placeholder }) {
 export default function NewOffer() {
   const { id: editId } = useParams();
   const { t, lang } = useI18n();
+  const { user } = useAuth();
+  const jobOnly = user?.plan === "job" && user?.role !== "admin"; // Pack Emploi seul : seulement chercher un emploi
   const navigate = useNavigate();
   const templates = useApi(`/offers/templates?lang=${lang}`); // modèles dans la langue de l'app
-  const [mode, setMode] = useState("ai");
+  const [mode, setMode] = useState(jobOnly ? "template" : "ai");
   const [form, setForm] = useState({ ...EMPTY, messageLanguage: lang });
   const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
@@ -43,6 +46,8 @@ export default function NewOffer() {
   const [error, setError] = useState(null);
   const [busy, setBusy] = useState(false);
   const countries = countryList(lang);
+  const isJob = form.serviceType.trim() === "job"; // recherche d'emploi : formulaire de candidature
+  const L = (key) => t(isJob && t(`newOffer.job.${key}`) !== `newOffer.job.${key}` ? `newOffer.job.${key}` : `newOffer.${key}`);
 
   // modification : on charge l'offre et on remplit le formulaire
   useEffect(() => {
@@ -61,8 +66,8 @@ export default function NewOffer() {
           cities: (o.targetCities?.length ? o.targetCities : [o.targetCity]).filter(Boolean).join(", "),
           criteria: o.criteria || [],
           customCriterion: o.customCriterion || "",
-      sellingPoint: o.sellingPoint || "",
           sellingPoint: o.sellingPoint || "",
+          cvUrl: o.cvUrl || "",
           messageLanguage: o.messageLanguage || "fr",
           price: o.price || "",
           priceOnQuote: Boolean(o.priceOnQuote),
@@ -86,6 +91,15 @@ export default function NewOffer() {
     setErrors({ ...errors, [key]: undefined });
   };
 
+  // textes des modèles dans la langue de l'app (traduits comme le reste : les 20 langues aussi)
+  const translated = (tpl) => {
+    const tr = (key) => {
+      const v = t(`templates.${tpl.id}.${key}`);
+      return v === `templates.${tpl.id}.${key}` ? tpl[key] : v; // pas de traduction : texte du serveur
+    };
+    return { ...tpl, name: tr("name"), title: tr("title"), description: tr("description"), sellingPoint: tpl.sellingPoint ? tr("sellingPoint") : undefined };
+  };
+
   function fill(o) {
     setForm({
       ...form,
@@ -95,6 +109,7 @@ export default function NewOffer() {
       categories: (o.targetCategories || []).join(", "),
       criteria: o.criteria || [],
       customCriterion: o.customCriterion || "",
+      sellingPoint: o.sellingPoint || "",
       messageLanguage: o.messageLanguage || form.messageLanguage,
       country: o.targetCountry || form.country,
       cities: (o.targetCities || []).join(", ") || form.cities,
@@ -134,6 +149,7 @@ export default function NewOffer() {
     if (categories.length === 0) e.categories = t("newOffer.errCategories");
     if (!isCountry(form.country)) e.country = t("newOffer.errCountry");
     if (!form.priceOnQuote && form.price !== "" && !(Number(form.price) >= 0)) e.price = t("newOffer.errPrice");
+    if (form.cvUrl.trim() && !isUrlOrEmpty(form.cvUrl.trim())) e.cvUrl = t("settings.errUrl");
     if ((cities.length || 1) * categories.length > 20) e.cities = t("newOffer.errTooMany");
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -155,6 +171,7 @@ export default function NewOffer() {
         criteria: form.criteria,
         customCriterion: form.customCriterion.trim().length >= 5 ? form.customCriterion.trim() : undefined,
         sellingPoint: form.sellingPoint.trim() || undefined,
+        cvUrl: isJob ? form.cvUrl.trim() : undefined,
         messageLanguage: form.messageLanguage,
         price: form.priceOnQuote ? 0 : Number(form.price) || 0,
         priceOnQuote: form.priceOnQuote,
@@ -174,7 +191,8 @@ export default function NewOffer() {
   return (
     <div className="page narrow">
       <h1>{t(editId ? "newOffer.editTitle" : "newOffer.title")}</h1>
-      {!editId && <div className="tabs" role="tablist">
+      {jobOnly && !editId && <p className="hint success">{t("newOffer.job.onlyJob")}</p>}
+      {!editId && !jobOnly && <div className="tabs" role="tablist">
         {["ai", "template", "manual"].map((m) => (
           <button
             key={m}
@@ -190,7 +208,7 @@ export default function NewOffer() {
           </button>
         ))}
       </div>}
-      {!editId && <p className="field-help mode-help">{t("help.modes")}</p>}
+      {!editId && !jobOnly && <p className="field-help mode-help">{t("help.modes")}</p>}
 
       <ErrorBox error={error} />
 
@@ -219,7 +237,7 @@ export default function NewOffer() {
           {templates.loading && <Loader />}
           <ErrorBox error={templates.error} onRetry={templates.reload} />
           <div className="cards">
-            {templates.data?.map((tpl) => (
+            {templates.data?.filter((tpl) => !jobOnly || tpl.serviceType === "job").map(translated).map((tpl) => (
               <button key={tpl.id} className="card template" onClick={() => fill(tpl)}>
                 <div className="lead-title">{tpl.name}</div>
                 <p className="muted">{tpl.description}</p>
@@ -232,24 +250,32 @@ export default function NewOffer() {
       {showForm && (
         <form className="card form" onSubmit={create} noValidate>
           {mode !== "manual" && <p className="hint success">{t("newOffer.check")}</p>}
+          {isJob && <p className="hint success">{t("newOffer.job.intro")}</p>}
           <label className="field">
-            <span>{t("newOffer.fieldTitle")}</span>
+            <span>{L("fieldTitle")}</span>
             <input value={form.title} onChange={set("title")} className={errors.title ? "invalid" : ""} />
-            {errors.title ? <small className="field-error">{errors.title}</small> : <FieldHelp>{t("help.title")}</FieldHelp>}
+            {errors.title ? <small className="field-error">{errors.title}</small> : <FieldHelp>{isJob ? t("newOffer.job.titleHelp") : t("help.title")}</FieldHelp>}
           </label>
           <label className="field">
-            <span>{t("newOffer.fieldDescription")} <em className="muted">({t("common.optional")})</em></span>
+            <span>{L("fieldDescription")} <em className="muted">({t("common.optional")})</em></span>
             <textarea rows={2} value={form.description} onChange={set("description")} />
-            <FieldHelp>{t("help.description")}</FieldHelp>
+            <FieldHelp>{isJob ? t("newOffer.job.descriptionHelp") : t("help.description")}</FieldHelp>
           </label>
-          <div className="grid-2">
+          {isJob && (
             <label className="field">
+              <span>{t("newOffer.job.fieldCv")} <em className="muted">({t("common.optional")})</em></span>
+              <input value={form.cvUrl} onChange={set("cvUrl")} placeholder="https://drive.google.com/..." className={errors.cvUrl ? "invalid" : ""} />
+              {errors.cvUrl ? <small className="field-error">{errors.cvUrl}</small> : <FieldHelp>{t("newOffer.job.cvHelp")}</FieldHelp>}
+            </label>
+          )}
+          <div className="grid-2">
+            {!isJob && <label className="field">
               <span>{t("newOffer.fieldService")}</span>
               <input value={form.serviceType} onChange={set("serviceType")} className={errors.serviceType ? "invalid" : ""} />
               {errors.serviceType ? <small className="field-error">{errors.serviceType}</small> : <FieldHelp>{t("help.service")}</FieldHelp>}
-            </label>
+            </label>}
             <label className="field">
-              <span>{t("newOffer.fieldCategories")}</span>
+              <span>{L("fieldCategories")}</span>
               <input value={form.categories} onChange={set("categories")} className={errors.categories ? "invalid" : ""} />
               <small className={errors.categories ? "field-error" : "muted"}>{errors.categories || t("newOffer.categoriesHint")}</small>
             </label>
@@ -261,7 +287,7 @@ export default function NewOffer() {
             <CityPicker value={form.cities} onChange={(v) => { setForm({ ...form, cities: v }); setErrors({ ...errors, cities: undefined }); }} error={errors.cities} />
           </div>
 
-          <fieldset className="field">
+          {!isJob && <fieldset className="field">
             <legend>{t("newOffer.fieldCriteria")} <em className="muted">({t("common.optional")})</em></legend>
             <FieldHelp>{t("help.criteria")}</FieldHelp>
             <div className="chips">
@@ -273,19 +299,19 @@ export default function NewOffer() {
             </div>
             {errors.criteria && <small className="field-error">{errors.criteria}</small>}
             {form.criteria.length === 0 && <p className="hint success">{t("newOffer.noCriteria")}</p>}
-          </fieldset>
+          </fieldset>}
 
           <label className="field">
-            <span>{t("newOffer.fieldSellingPoint")} <em className="muted">({t("common.optional")})</em></span>
-            <input value={form.sellingPoint} onChange={set("sellingPoint")} maxLength={300} placeholder={t("newOffer.sellingPointPlaceholder")} />
-            <FieldHelp>{t("help.sellingPoint")}</FieldHelp>
+            <span>{L("fieldSellingPoint")} <em className="muted">({t("common.optional")})</em></span>
+            <input value={form.sellingPoint} onChange={set("sellingPoint")} maxLength={300} placeholder={isJob ? t("newOffer.job.sellingPointPlaceholder") : t("newOffer.sellingPointPlaceholder")} />
+            <FieldHelp>{isJob ? t("newOffer.job.sellingPointHelp") : t("help.sellingPoint")}</FieldHelp>
           </label>
 
-          <label className="field">
+          {!isJob && <label className="field">
             <span>{t("newOffer.fieldCustom")} <em className="muted">({t("common.optional")})</em></span>
             <input value={form.customCriterion} onChange={set("customCriterion")} placeholder={t("newOffer.customPlaceholder")} />
             <small className="muted">{t("newOffer.customHint")}</small>
-          </label>
+          </label>}
 
           <div className="grid-3">
             <label className="field">
@@ -295,7 +321,7 @@ export default function NewOffer() {
               </select>
               <small className="muted">{t("newOffer.languageHint")}</small>
             </label>
-            <label className="field">
+            {!isJob && <label className="field">
               <span>{t("newOffer.fieldPrice")}</span>
               <input type="number" min="0" value={form.priceOnQuote ? "" : form.price} onChange={set("price")} disabled={form.priceOnQuote} className={errors.price ? "invalid" : ""} />
               <label className="check small">
@@ -303,14 +329,14 @@ export default function NewOffer() {
                 <span>{t("newOffer.onQuote")}</span>
               </label>
               {errors.price ? <small className="field-error">{errors.price}</small> : <FieldHelp>{t("help.price")}</FieldHelp>}
-            </label>
-            <label className="field">
+            </label>}
+            {!isJob && <label className="field">
               <span>{t("newOffer.fieldCurrency")}</span>
               <select value={form.currency} onChange={set("currency")}>
                 {CURRENCIES.map((c) => <option key={c} value={c}>{currencyLabel(c, lang)}</option>)}
               </select>
               <FieldHelp>{t("help.currency")}</FieldHelp>
-            </label>
+            </label>}
           </div>
           <div className="grid-2">
             <label className="field">

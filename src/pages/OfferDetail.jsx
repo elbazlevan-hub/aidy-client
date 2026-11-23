@@ -26,7 +26,9 @@ export default function OfferDetail() {
   const autoStarted = useRef(false);
 
   const isAdmin = user?.role === "admin";
-  const credits = isAdmin ? Infinity : user?.credits ?? 0;
+  const isJobOffer = offer.data?.offer?.serviceType === "job";
+  // offre emploi : crédits emploi + crédits normaux ; offre de vente : crédits normaux seulement
+  const credits = isAdmin ? Infinity : (user?.credits ?? 0) + (isJobOffer ? user?.jobCredits ?? 0 : 0);
 
   async function reloadAll() {
     await Promise.all([leads.reload(), offer.reload(), refresh()]);

@@ -6,6 +6,7 @@ import { Empty, ErrorBox, Loader } from "../components/States.jsx";
 import LeadCard from "../components/LeadCard.jsx";
 import MoneyCard from "../components/MoneyCard.jsx";
 import Help from "../components/Help.jsx";
+import GettingStarted from "../components/GettingStarted.jsx";
 
 // le plan du jour : qui relancer, qui contacter, l'argent généré
 export default function Today() {
@@ -32,6 +33,8 @@ export default function Today() {
           <div className="progress" aria-hidden="true"><div style={{ width: `${progress}%` }} /></div>
         </div>
       </header>
+
+      <GettingStarted />
 
       {offers.data?.length === 0 ? (
         <Empty icon="🎯" title={t("today.noOffer")}>

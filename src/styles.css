@@ -490,3 +490,27 @@ legend + .field-help { margin-bottom: 0.5rem; }
 .link-btn:hover { color: var(--ink); }
 .link-btn:disabled { opacity: 0.5; cursor: default; }
 .unlock-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: flex-end; }
+
+/* ---------- Bien démarrer (Aujourd'hui) ---------- */
+.onboarding { display: grid; gap: 0.8rem; margin-bottom: 1.4rem; border-color: rgba(91, 140, 255, 0.35); }
+.onboarding-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.onboarding-head h2 { margin: 0; }
+.onboarding-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.onboarding-steps li { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 0.7rem; border-radius: 10px; color: var(--muted); }
+.onboarding-steps li.next { background: var(--surface2); color: var(--ink); }
+.onboarding-steps li.done .step-text { text-decoration: line-through; text-decoration-color: var(--line-strong); }
+.step-check { flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--line-strong); display: grid; place-items: center; font-size: 0.75rem; color: #0a0e1c; }
+.onboarding-steps li.done .step-check { background: var(--accent); border-color: var(--accent); }
+.onboarding-steps li.next .step-check { border-color: var(--primary); }
+.step-text { flex: 1; }
+
+/* ---------- Guide ---------- */
+.guide-toc ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.3rem; }
+.guide-section { scroll-margin-top: 1.5rem; }
+.guide-section h2 { margin-top: 0; }
+@media (max-width: 600px) {
+  .onboarding-steps li { flex-wrap: wrap; }
+  .onboarding-steps li .btn { margin-left: 2rem; }
+}
+.guide-section .perks { list-style: none; padding: 0; margin: 0.4rem 0 0; display: grid; gap: 0.45rem; }
+.guide-toc { margin-bottom: 1.4rem; }

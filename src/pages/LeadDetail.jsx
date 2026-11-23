@@ -183,7 +183,8 @@ export default function LeadDetail() {
           )}
 
           {/* conversation + assistant de réponse */}
-          {lead.status !== "toContact" && (
+          {/* visible dès qu'un message existe : on peut coller la réponse même sans avoir cliqué « J'ai envoyé » */}
+          {(lead.status !== "toContact" || lead.message) && (
             <section className="card">
               <h2>{t("lead.conversation")}</h2>
               <div className="conversation">
@@ -202,7 +203,7 @@ export default function LeadDetail() {
                   <h3>{t("lead.aidyReply")}</h3>
                   <pre className="message" dir="auto">{lead.suggestedReply}</pre>
                   {assistant?.missingInfo?.length > 0 && <p className="hint">{t("lead.missingInfo", { list: assistant.missingInfo.join(", ") })}</p>}
-                  <SendButtons links={assistant?.links || {}} text={lead.suggestedReply} />
+                  <SendButtons links={assistant?.links || lead.replyLinks || {}} text={lead.suggestedReply} />
                   <button className="btn btn-primary" disabled={!!busy} onClick={() => act("sent", () => api.post(`/leads/${id}/reply/sent`, {}), (r) => { setLead(r); setAssistant(null); })}>
                     {t("lead.replySent")}
                   </button>
