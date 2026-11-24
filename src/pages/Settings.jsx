@@ -6,6 +6,7 @@ import { useI18n } from "../i18n/I18nContext.jsx";
 import LangSwitch from "../components/LangSwitch.jsx";
 import { WORLD_LANGUAGE_CODES, nativeName, localName } from "../i18n/worldLanguages.js";
 import Help, { FieldHelp } from "../components/Help.jsx";
+import PremiumBadge from "../components/PremiumBadge.jsx";
 import { useApi } from "../utils/useApi.js";
 import { ErrorBox, Loader } from "../components/States.jsx";
 import { isUrlOrEmpty } from "../utils/validate.js";
@@ -110,6 +111,7 @@ export default function Settings() {
       <section className="card">
         <h2>{t("settings.profile")}</h2>
         <p className="muted">{t("settings.profileHint")}</p>
+        <p className="muted small">{t("premium.profileNote")} <PremiumBadge /></p>
         {profile.loading && <Loader />}
         <ErrorBox error={profile.error || error} onRetry={profile.error ? profile.reload : undefined} />
         {profile.data && (

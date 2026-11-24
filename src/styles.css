@@ -514,3 +514,19 @@ legend + .field-help { margin-bottom: 0.5rem; }
 }
 .guide-section .perks { list-style: none; padding: 0; margin: 0.4rem 0 0; display: grid; gap: 0.45rem; }
 .guide-toc { margin-bottom: 1.4rem; }
+
+/* Edge / anciens navigateurs Microsoft : cache leur œil intégré (on a déjà le nôtre) */
+input::-ms-reveal, input::-ms-clear { display: none; }
+
+/* ---------- fonctions réservées au pack Premium ---------- */
+.premium-badge { display: inline-flex; align-items: center; gap: 0.2rem; margin-left: 0.4rem; padding: 0.1rem 0.5rem; border-radius: 999px; font-size: 0.7rem; font-weight: 700; color: var(--amber); background: rgba(245, 181, 68, 0.12); border: 1px solid rgba(245, 181, 68, 0.35); vertical-align: middle; white-space: nowrap; }
+[dir="rtl"] .premium-badge { margin-left: 0; margin-right: 0.4rem; }
+.paste-locked textarea { opacity: 0.5; cursor: not-allowed; }
+.premium-lock { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.8rem; padding: 0.8rem 1rem; border-radius: 12px; background: rgba(245, 181, 68, 0.08); border: 1px solid rgba(245, 181, 68, 0.25); }
+.premium-lock p { margin: 0; flex: 1; min-width: 200px; }
+.premium-lock-icon { font-size: 1.1rem; }
+.btn-premium { background: linear-gradient(135deg, #f5b544, #f08c3a); color: #1a1205; border-color: transparent; font-weight: 700; }
+.btn-premium:hover { filter: brightness(1.08); }
+.nav-premium { margin-left: auto; font-size: 0.72rem; color: var(--amber); }
+[dir="rtl"] .nav-premium { margin-left: 0; margin-right: auto; }
+.premium-lock { margin-bottom: 1rem; }

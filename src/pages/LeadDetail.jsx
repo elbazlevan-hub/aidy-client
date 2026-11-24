@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { api } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import PremiumBadge from "../components/PremiumBadge.jsx";
+import PremiumLock from "../components/PremiumLock.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import { useApi } from "../utils/useApi.js";
 import { ErrorBox, Loader } from "../components/States.jsx";
@@ -19,6 +21,7 @@ export default function LeadDetail() {
   const { id } = useParams();
   const { t, lang } = useI18n();
   const { user, refresh } = useAuth();
+  const hasPremium = user?.plan === "premium" || user?.role === "admin"; // l'assistant de réponse est réservé au Premium
   const navigate = useNavigate();
   const { data: lead, setData: setLead, loading, error, reload } = useApi(`/leads/${id}`);
   const offerId = lead?.offerId;
@@ -211,26 +214,29 @@ export default function LeadDetail() {
               )}
 
               {lead.status !== "rejected" && (
-                <div className="paste">
+                <div className={`paste${hasPremium ? "" : " paste-locked"}`}>
                   <label className="field">
-                    <span>{t("lead.pasteReply")}<Help text={t("help.pasteReply")} /></span>
-                    <textarea rows={3} dir="auto" value={replyText} placeholder={t("lead.pasteReplyPlaceholder")} onChange={(e) => setReplyText(e.target.value)} />
+                    <span>{t("lead.pasteReply")} <PremiumBadge /><Help text={t("help.pasteReply")} /></span>
+                    <textarea rows={3} dir="auto" value={replyText} disabled={!hasPremium} placeholder={t("lead.pasteReplyPlaceholder")} onChange={(e) => setReplyText(e.target.value)} />
                   </label>
-                  <button
-                    className="btn btn-accent"
-                    disabled={!!busy || !replyText.trim()}
-                    onClick={() =>
-                      act("reply", () => api.post(`/leads/${id}/reply`, { text: replyText.trim() }), (r) => {
-                        setLead(r.lead);
-                        setAssistant(r);
-                        setReplyText("");
-                        setNotice(t(`labels.${r.label}`));
-                      })
-                    }
-                  >
-                    {busy === "reply" ? t("lead.analyzingReply") : t("lead.analyzeReply")}
-                  </button>
-                  {user?.plan !== "premium" && user?.role !== "admin" && <p className="muted small">{t("lead.premiumOnly")} <Link to="/packs">{t("nav.seePacks")}</Link></p>}
+                  {hasPremium ? (
+                    <button
+                      className="btn btn-accent"
+                      disabled={!!busy || !replyText.trim()}
+                      onClick={() =>
+                        act("reply", () => api.post(`/leads/${id}/reply`, { text: replyText.trim() }), (r) => {
+                          setLead(r.lead);
+                          setAssistant(r);
+                          setReplyText("");
+                          setNotice(t(`labels.${r.label}`));
+                        })
+                      }
+                    >
+                      {busy === "reply" ? t("lead.analyzingReply") : t("lead.analyzeReply")}
+                    </button>
+                  ) : (
+                    <PremiumLock text={t("premium.replyLocked")} />
+                  )}
                 </div>
               )}
             </section>

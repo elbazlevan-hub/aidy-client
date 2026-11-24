@@ -1,4 +1,5 @@
 import { useI18n } from "../i18n/I18nContext.jsx";
+import PremiumBadge from "../components/PremiumBadge.jsx";
 
 const SECTIONS = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"];
 
@@ -23,7 +24,7 @@ export default function Guide() {
         const text = t(`guide.${s}.text`);
         return (
           <section key={s} id={s} className="card guide-section">
-            <h2>{t(`guide.${s}.title`)}</h2>
+            <h2>{t(`guide.${s}.title`)} {s === "s6" && <PremiumBadge />}</h2>
             {text && <p>{text}</p>}
             <ul className="perks">
               {t(`guide.${s}.tips`).split("|").map((tip) => <li key={tip}>{tip}</li>)}

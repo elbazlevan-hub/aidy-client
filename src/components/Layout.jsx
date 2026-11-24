@@ -8,7 +8,7 @@ import Icon from "./Icon.jsx";
 const LINKS = [
   { to: "/today", key: "nav.today", icon: "today" },
   { to: "/offers", key: "nav.offers", icon: "offers" },
-  { to: "/inbox", key: "nav.inbox", icon: "inbox" },
+  { to: "/inbox", key: "nav.inbox", icon: "inbox", premium: true }, // l'assistant de réponse : Premium
   { to: "/stats", key: "nav.stats", icon: "stats" },
   { to: "/packs", key: "nav.packs", icon: "packs" },
   { to: "/guide", key: "nav.guide", icon: "guide" },
@@ -56,6 +56,7 @@ export default function Layout() {
             <NavLink key={l.to} to={l.to} className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}>
               <span className="nav-icon"><Icon name={l.icon} /></span>
               <span className="nav-label">{t(l.key)}</span>
+              {l.premium && !unlimited && user?.plan !== "premium" && <span className="nav-premium" title={t("premium.tooltip")}>★</span>}
             </NavLink>
           ))}
         </nav>
