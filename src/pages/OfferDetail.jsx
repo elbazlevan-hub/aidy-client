@@ -139,7 +139,9 @@ export default function OfferDetail() {
             {o.priceOnQuote ? ` · ${t("newOffer.onQuote")}` : o.price > 0 && ` · ${money(o.price, o.currency, lang)}`}
           </p>
         </div>
-        <div className="offer-head-right">
+      </header>
+      {/* barre d'outils : recherche dans l'offre + actions */}
+      <div className="offer-toolbar">
         {/* retrouver vite un commerce de cette offre (ex. pour le passer en « Refusé ») */}
         <GlobalSearch className="search-offer" offerId={id} />
         <div className="mini-actions">
@@ -150,8 +152,7 @@ export default function OfferDetail() {
           <a className="btn btn-ghost btn-small" href={`${API_URL}/offers/${id}/export`} title={t("help.export")}>{t("offer.export")}</a>
           <button className="btn btn-ghost btn-small danger" onClick={remove} disabled={!!step}>{t("common.delete")}</button>
         </div>
-        </div>
-      </header>
+      </div>
 
       {/* le gros bouton : ce qu'il faut faire maintenant */}
       {!step && !hasSearched && (

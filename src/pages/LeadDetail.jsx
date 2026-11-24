@@ -224,7 +224,7 @@ export default function LeadDetail() {
                       className="btn btn-accent"
                       disabled={!!busy || !replyText.trim()}
                       onClick={() =>
-                        act("reply", () => api.post(`/leads/${id}/reply`, { text: replyText.trim() }), (r) => {
+                        act("reply", () => api.post(`/leads/${id}/reply`, { text: replyText.trim(), lang }), (r) => {
                           setLead(r.lead);
                           setAssistant(r);
                           setReplyText("");
