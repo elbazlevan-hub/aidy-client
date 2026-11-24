@@ -3,7 +3,6 @@ import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useI18n } from "../i18n/I18nContext.jsx";
 import Logo from "./Logo.jsx";
-import GlobalSearch from "./GlobalSearch.jsx";
 import Icon from "./Icon.jsx";
 
 const LINKS = [
@@ -48,12 +47,10 @@ export default function Layout() {
         <div className="mobile-top-right">
           {credits}
         </div>
-        <GlobalSearch className="search-mobile" />
       </header>
 
       <aside className="sidebar">
         <Logo />
-        <GlobalSearch className="search-desktop" />
         <nav className="nav">
           {LINKS.map((l) => (
             <NavLink key={l.to} to={l.to} className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}>

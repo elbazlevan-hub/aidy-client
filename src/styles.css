@@ -543,12 +543,7 @@ input::-ms-reveal, input::-ms-clear { display: none; }
 .search-name { font-weight: 600; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .search-meta { grid-column: 1 / -1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .search-empty { margin: 0; padding: 0.6rem; }
-.search-mobile { display: none; }
-@media (max-width: 860px) {
-  .search-desktop { display: none; }
-  .mobile-top { flex-wrap: wrap; }
-  .search-mobile { display: block; width: 100%; margin: 0.4rem 0 0; }
-  .search-results { width: 100%; }
-}
+.search-page { max-width: 560px; margin: 0 0 1.4rem; }
+.search-page input { padding-top: 0.75rem; padding-bottom: 0.75rem; font-size: 0.95rem; }
+.search-page .search-results { width: 100%; }
 .sidebar { z-index: 20; } /* la liste de la recherche passe au-dessus du contenu de la page */
-.sidebar .global-search { margin: -0.6rem 0 -0.6rem; }
