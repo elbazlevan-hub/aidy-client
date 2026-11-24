@@ -5,7 +5,7 @@ import { useI18n } from "../i18n/I18nContext.jsx";
 import { joinMeta, realCity } from "../utils/format.js";
 
 // barre de recherche : retrouver vite un commerce débloqué (nom, téléphone, email, Instagram), dans toutes les offres
-export default function GlobalSearch({ className = "" }) {
+export default function GlobalSearch({ className = "", offerId }) {
   const { t } = useI18n();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
@@ -21,7 +21,7 @@ export default function GlobalSearch({ className = "" }) {
     let cancelled = false;
     const timer = setTimeout(() => {
       api
-        .get(`/leads/search?q=${encodeURIComponent(text)}`)
+        .get(`/leads/search?q=${encodeURIComponent(text)}${offerId ? `&offerId=${offerId}` : ""}`)
         .then((r) => !cancelled && (setResults(r), setActive(0)))
         .catch(() => !cancelled && setResults([]));
     }, 250);
@@ -29,7 +29,7 @@ export default function GlobalSearch({ className = "" }) {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [q]);
+  }, [q, offerId]);
 
   // clic en dehors : on ferme la liste
   useEffect(() => {
@@ -80,7 +80,7 @@ export default function GlobalSearch({ className = "" }) {
               >
                 <span className="search-name" dir="auto">{r.name}</span>
                 <span className={`badge badge-${r.status}`}>{t(`status.${r.status}`)}</span>
-                <span className="search-meta muted small" dir="auto">{joinMeta(r.category, realCity(r.city), r.offerTitle)}</span>
+                <span className="search-meta muted small" dir="auto">{joinMeta(r.category, realCity(r.city), offerId ? "" : r.offerTitle)}</span>
               </button>
             ))
           )}

@@ -3,7 +3,6 @@ import { useI18n } from "../i18n/I18nContext.jsx";
 import { useApi } from "../utils/useApi.js";
 import { Empty, ErrorBox, Loader } from "../components/States.jsx";
 import { money } from "../utils/format.js";
-import GlobalSearch from "../components/GlobalSearch.jsx";
 
 export default function Offers() {
   const { t, lang } = useI18n();
@@ -15,8 +14,6 @@ export default function Offers() {
         <h1>{t("offers.title")}</h1>
         <Link to="/offers/new" className="btn btn-primary">+ {t("offers.new")}</Link>
       </header>
-      {/* retrouver vite un commerce contacté, dans toutes les offres (ex. pour le passer en « Refusé ») */}
-      <GlobalSearch className="search-page" />
       {loading && <Loader />}
       <ErrorBox error={error} onRetry={reload} />
       {data && data.length === 0 && (

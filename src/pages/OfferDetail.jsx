@@ -1,3 +1,4 @@
+import GlobalSearch from "../components/GlobalSearch.jsx";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import { api, API_URL } from "../api.js";
@@ -138,6 +139,9 @@ export default function OfferDetail() {
             {o.priceOnQuote ? ` · ${t("newOffer.onQuote")}` : o.price > 0 && ` · ${money(o.price, o.currency, lang)}`}
           </p>
         </div>
+        <div className="offer-head-right">
+        {/* retrouver vite un commerce de cette offre (ex. pour le passer en « Refusé ») */}
+        <GlobalSearch className="search-offer" offerId={id} />
         <div className="mini-actions">
           {hasSearched && (
             <button className="btn btn-ghost btn-small" onClick={findClients} disabled={!!step}>{t("offer.searchAgain")}</button>
@@ -145,6 +149,7 @@ export default function OfferDetail() {
           <Link className="btn btn-ghost btn-small" to={`/offers/${id}/edit`}>{t("offer.edit")}</Link>
           <a className="btn btn-ghost btn-small" href={`${API_URL}/offers/${id}/export`} title={t("help.export")}>{t("offer.export")}</a>
           <button className="btn btn-ghost btn-small danger" onClick={remove} disabled={!!step}>{t("common.delete")}</button>
+        </div>
         </div>
       </header>
 
